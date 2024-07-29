@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "flow-matching-exposition"
+version = "0.1.0"
+description = "Flow Matching Exposition"
+authors = ["Pramook Khungurn <pramook2gmail.com>"]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.11"
+torch = {version = "1.13.1", source = "torch_cu117"}
+torchvision = {version = "0.14.1", source = "torch_cu117"}
+tensorboard = "^2.15.1"
+opencv-python = "^4.8.1.78"
+einops = "^0.7.0"
+matplotlib = "^3.8.3"
+diffusers = "^0.27.2"
+safetensors = "^0.4.2"
+numpy = "^1.26.4"
+scipy = "^1.12.0"
+
+
+[[tool.poetry.source]]
+name = "torch_cu117"
+url = "https://download.pytorch.org/whl/cu117"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
