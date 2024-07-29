@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>0000</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: {autoNumber: "AMS"} }
+    });
+    </script>
+    <script type="text/javascript"
+            src="../../MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
+
+</head>
+<body>
+<div class="container">
+    <span style="visibility: hidden;">
+        \(
+        \def\sc#1{\dosc#1\csod}
+        \def\dosc#1#2\csod{{\rm #1{\small #2}}}
+
+        \newcommand{\dee}{\mathrm{d}}
+        \newcommand{\Dee}{\mathrm{D}}
+        \newcommand{\In}{\mathrm{in}}
+        \newcommand{\Out}{\mathrm{out}}
+        \newcommand{\pdf}{\mathrm{pdf}}
+        \newcommand{\Cov}{\mathrm{Cov}}
+        \newcommand{\Var}{\mathrm{Var}}
+
+        \newcommand{\ve}[1]{\mathbf{#1}}
+        \newcommand{\ves}[1]{\boldsymbol{#1}}
+        \newcommand{\mrm}[1]{\mathrm{#1}}
+        \newcommand{\etal}{{et~al.}}
+        \newcommand{\sphere}{\mathbb{S}^2}
+        \newcommand{\modeint}{\mathcal{M}}
+        \newcommand{\azimint}{\mathcal{N}}
+        \newcommand{\ra}{\rightarrow}
+        \newcommand{\mcal}[1]{\mathcal{#1}}
+        \newcommand{\X}{\mathcal{X}}
+        \newcommand{\Y}{\mathcal{Y}}
+        \newcommand{\Z}{\mathcal{Z}}
+        \newcommand{\x}{\mathbf{x}}
+        \newcommand{\y}{\mathbf{y}}
+        \newcommand{\z}{\mathbf{z}}
+        \newcommand{\tr}{\mathrm{tr}}
+        \newcommand{\sgn}{\mathrm{sgn}}
+        \newcommand{\diag}{\mathrm{diag}}
+        \newcommand{\Real}{\mathbb{R}}
+        \newcommand{\sseq}{\subseteq}
+        \newcommand{\ov}[1]{\overline{#1}}
+        \DeclareMathOperator*{\argmax}{arg\,max}
+        \DeclareMathOperator*{\argmin}{arg\,min}
+
+        \newcommand{\data}{\mathrm{data}}
+        \newcommand{\N}{\mathcal{N}}
+        \newcommand{\Hil}{\mathcal{H}}
+        \)
+    </span>
+
+    <br>
+    <h1>Vector Function</h1>
+    <hr>
+
+    <p>For the current paper we are reading, we are working in a $d$-dimensional space $\Real^d$.</p>
+    <hr>
+
+    <p>We denote a vector in $\Real^d$ with $x = (x^1, x^2, \dotsc, x^d)$.</p>
+
+    <p>This is an unusual convention. However, some really famous textbooks uses it. These textbooks include Spivak's <a href="https://www.amazon.co.jp/-/en/Michael-Spivak/dp/0805390219">Calculus on Manifolds</a>, which is one of the book I learned multi-variable calculus from.</p>
+    <hr>
+
+    <p><b>Definition.</b> A <b>vector function</b> or a <b>vector-valued function</b> is a function $f$ that maps $\Real^n$ to $\Real^m$ for some positive integers $n$ and $m$.</p>
+
+    <hr>
+    <p>We say that the function $f$ has <b>signature</b> $\Real^n \ra \Real^m$. We also write $f:\Real^n \ra \Real^m$.</p>
+
+    <hr>
+    <p>Most of the time, we will deal with functions of signature $\Real^d \ra \Real^d$ or $\Real^{d+1} \ra \Real^d$.</p>
+
+    <hr>
+    <p>Let's talk first about functions of signature $\Real^d \ra \Real^d$. There are two interpretations of this type of functions.</p>
+
+    <ol>
+        <li>Point transformation.</li>
+        <li>Vector field.</li>
+    </ol>
+    
+    <hr>    
+    <p><a href="../../index.html">[Top]</a> <a href="../_0001/index.html">[&gt;&gt;]</a></p>
+    
+</div>
+
+<script type="text/javascript">
+$.bigfoot();
+</script>
+
+</body>
+</html>
