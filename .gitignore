@@ -163,3 +163,4 @@ cython_debug/
 
 python/venvs/*
 python/.idea/*
+data/*

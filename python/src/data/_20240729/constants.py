@@ -1,0 +1,3 @@
+DATA_20240729_PREFIX = "data/_20240729"
+
+HOSHIHINA_600_FILE_NAME = "data/_20240729/images/hoshihina_600.png"
