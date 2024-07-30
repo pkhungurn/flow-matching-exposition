@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0031</title>
+    <title>0033</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,19 +81,51 @@
     </span>
 
     <br>
-    <h1>Diffeomorphism (cont.)</h1>
+    <h1>Gaussian Distributions</h1>
 
     <hr>    
-    <p>Is a scale-add $\texttt{T}_\mu \circ \texttt{S}_\sigma$ a diffeomorphism?</p>
+    <p>We work a lot with <b>Gaussian distribution</b>:
+    $$ p(x) = \mcal{N}(x;\mu,\Sigma) = \frac{ \exp(-\frac{1}{2}(x-\mu)^T \Sigma^{-1} (x-\mu)) }{(2\pi)^{d/2} (\det \Sigma)^{1/2}}$$
+    where $\mu \in \Real^d$ is called the <b>mean</b>, and $\Sigma \in \Real^{d \times d}$ is a positive definite called the <b>covariance matrix.</b>
+    </p>
 
     <hr>
-    <p><b>Answer.</b> If and only if $\sigma \neq 0$.</p>
+    <p>We use the symbol $\mcal{N}(\mu,\sigma^2I)$ to refer the distribution when calculation with the input $x$ is not needed.</p>
+
+    <hr>
+    <p>In this talk, the Gaussian will always be <b>isotropic</b>. This means that $\Sigma = \sigma^2 I$ for some constant $\sigma > 0$. So, $$ p(x) = \mcal{N}(x;\mu,\sigma^2I) = \frac{1}{(2\pi \sigma)^{d/2}} \exp \bigg( \frac{-\| x-\mu \|^2}{2\sigma^2} \bigg).$$ The constant $\sigma$ is called the <b>variance</b>.</p>
+    
+    <hr>
+    <p>Here's some visualization of some isotropic Gaussians.</p>
+
+    <table cellpadding="10" border="1">
+        <tr>
+            <td><b>Distribution</b></td>
+            <td><b>Visualization<br>(Each image its own scale)</b></td>
+            <td><b>Visualization<br>(All images in the same scale)</b></td>
+        </tr>
+        <tr>
+            <td>$$ \mcal{N}(0, I)$$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_00.png" width="400" alt=""></td>
+            <td><img src="../../data/_20240729/probdist/gaussian_00_to_scale.png" width="400" alt=""></td>
+        </tr>
+        <tr>
+            <td>$$ \mcal{N}((-1,1), 0.5^2I)$$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_01.png" width="400" alt=""></td>
+            <td><img src="../../data/_20240729/probdist/gaussian_01_to_scale.png" width="400" alt=""></td>
+        </tr>
+        <tr>
+            <td>$$ \mcal{N}((2,-1), 2^2I)$$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_02.png" width="400" alt=""></td>
+            <td><img src="../../data/_20240729/probdist/gaussian_02_to_scale.png" width="400" alt=""></td>
+        </tr>
+    </table>
 
     <hr>
     <p>
-        <a href="../_0030/index.html">[&lt;&lt;]</a> 
+        <a href="../_0032/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0032/index.html">[&gt;&gt;]</a> 
+        <a href="../_0034/index.html">[&gt;&gt;]</a> 
     </p> 
 </div>
 

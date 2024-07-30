@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0031</title>
+    <title>0041</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -80,21 +80,32 @@
         \)
     </span>
 
-    <br>
-    <h1>Diffeomorphism (cont.)</h1>
-
-    <hr>    
-    <p>Is a scale-add $\texttt{T}_\mu \circ \texttt{S}_\sigma$ a diffeomorphism?</p>
+    <h1>Continuous Normalizing Flow?</h1>
 
     <hr>
-    <p><b>Answer.</b> If and only if $\sigma \neq 0$.</p>
+    <p>The main idea of normalzing flow is interesting.</p>
+
+    <hr>
+    <p>It says that, to transform $p_{\mrm{noise}}$ into $p_{\mrm{data}}$, we subject $p_{\mrm{noise}}$ to a series of vector functions: 
+    $$f_{\theta_1}, f_{\theta_2}, f_{\theta_3}, \dotsc, f_{\theta_{K-1}}, f_{\theta_K}.$$ 
+    This gives us as series of push-forwards
+    $$p_{\mrm{noise}}, [f_{\theta_1}]_* p_{\mrm{noise}}, [f_{\theta_2 \dotsm \theta_1}]_* p_{\mrm{noise}}, [f_{\theta_3 \dotsm \theta_1}]_* p_{\mrm{noise}}, \dotsc, [f_{\theta_K \dotsm \theta_1}]_* p_{\mrm{noise}} $$
+    The hope is that the last distribution $[f_{\theta_K \dotsm \theta_1}]_* p_{\mrm{noise}}$ is a good approximation of $p_{\data}$.
+    </p>
+
+    <hr>
+    <p>In other words, $p_{\mrm{noise}}$ is gradually transformed into $p_{\data}$ in multiple steps.</p>
+
+    <hr>
+    <p>What if the transformation is not in discrete steps but happens continuously?<br>
+    Like, can $p_{\mrm{noise}}$ <i>evolves continuously over time</i> to $p_{\data}$?</p>    
 
     <hr>
     <p>
-        <a href="../_0030/index.html">[&lt;&lt;]</a> 
+        <a href="../_0040/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0032/index.html">[&gt;&gt;]</a> 
-    </p> 
+        <a href="../_0042/index.html">[&gt;&gt;]</a> 
+    </p>
 </div>
 
 <script type="text/javascript">

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>0040</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: {autoNumber: "AMS"} }
+    });
+    </script>
+    <script type="text/javascript"
+            src="../../MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
+
+</head>
+<body>
+<div class="container">
+    <span style="visibility: hidden;">
+        \(
+        \def\sc#1{\dosc#1\csod}
+        \def\dosc#1#2\csod{{\rm #1{\small #2}}}
+
+        \newcommand{\dee}{\mathrm{d}}
+        \newcommand{\Dee}{\mathrm{D}}
+        \newcommand{\In}{\mathrm{in}}
+        \newcommand{\Out}{\mathrm{out}}
+        \newcommand{\pdf}{\mathrm{pdf}}
+        \newcommand{\Cov}{\mathrm{Cov}}
+        \newcommand{\Var}{\mathrm{Var}}
+
+        \newcommand{\ve}[1]{\mathbf{#1}}
+        \newcommand{\ves}[1]{\boldsymbol{#1}}
+        \newcommand{\mrm}[1]{\mathrm{#1}}
+        \newcommand{\etal}{{et~al.}}
+        \newcommand{\sphere}{\mathbb{S}^2}
+        \newcommand{\modeint}{\mathcal{M}}
+        \newcommand{\azimint}{\mathcal{N}}
+        \newcommand{\ra}{\rightarrow}
+        \newcommand{\mcal}[1]{\mathcal{#1}}
+        \newcommand{\X}{\mathcal{X}}
+        \newcommand{\Y}{\mathcal{Y}}
+        \newcommand{\Z}{\mathcal{Z}}
+        \newcommand{\x}{\mathbf{x}}
+        \newcommand{\y}{\mathbf{y}}
+        \newcommand{\z}{\mathbf{z}}
+        \newcommand{\tr}{\mathrm{tr}}
+        \newcommand{\sgn}{\mathrm{sgn}}
+        \newcommand{\diag}{\mathrm{diag}}
+        \newcommand{\Real}{\mathbb{R}}
+        \newcommand{\sseq}{\subseteq}
+        \newcommand{\ov}[1]{\overline{#1}}
+        \DeclareMathOperator*{\argmax}{arg\,max}
+        \DeclareMathOperator*{\argmin}{arg\,min}
+
+        \newcommand{\data}{\mathrm{data}}
+        \newcommand{\N}{\mathcal{N}}
+        \newcommand{\Hil}{\mathcal{H}}
+        \)
+    </span>
+
+    <h1>(Discrete) Normalizing Flow</h1>
+
+    <hr>
+    <p>For this approach, $f_\theta$ has signature $\Real^d \ra \Real^d$, and we want to make sure that
+    $$p_{\data} = [f_\theta]_* p_{\mrm{noise}}.$$
+    </p>
+
+    <hr>
+    <p>Howver, $f_\theta$ is a composition of multiple neural networks. $$f_\theta = f_{\theta_K} \circ f_{\theta_{K-1}} \circ \dotsb \circ f_{\theta_2} \circ f_{\theta_1} \circ f_{\theta_1} $$
+    where $K$ is a hyparameter.</p>
+
+    <hr>
+    <p>Each $f_{\theta_k}$ does not have to have the same form (i.e., same network architecture). <br>However, most of the time they have the same form because we want the whole thing to be simple.</p>    
+
+    <hr>
+    <p>We can train the network to minimize the negative log-likelihood of the samples. In other words, we want to minimize
+    \begin{align*} 
+    \mcal{L}_{\mrm{NLL}} 
+    &= E_{x_{\data} \sim p_{\data}} \bigg[ -\log \Big( \big( [f_\theta]_* p_{\mrm{noise}}\big) (x_{\data}) \Big) \bigg] \\
+    &= E_{x_{\data} \sim p_{\data}} \bigg[ -\log \bigg( \frac{p_{\mrm{noise}}(f^{-1}_\theta(x_{\data}))}{|\det \nabla f_\theta(f^{-1}_\theta(x_{\data})) |}  \bigg) \bigg]\\
+    &= E_{x_{\data} \sim p_{\data}} \bigg[ -\log \big( p_{\mrm{noise}}(f^{-1}_\theta(x_{\data})) \big) + \log \big|\det \nabla f_\theta(f^{-1}_\theta(x_{\data})) \big| \bigg]
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>In order to be able to minimize the above loss, we must be able to compute $f^{-1}_\theta$ quickly.<br>
+    This means that each $f_{\theta_k}$ must be invertible.</p>
+
+    <hr>
+    <p>In general, finding $f_{\theta_k}^{-1}$ is very hard.<br>
+    So people usually restrict the architecture of $f_{\theta_k}$ so that inverses can be computed quickly.</p>
+
+    <hr>
+    <p>The loss also has the term $\log \big|\det \nabla f_\theta(f^{-1}_\theta(x_{\data})) \big|$, which we must be able to compute quickly as well.</p>
+
+    <hr>
+    <p>Derivative of composite functions can be computed through the chain rule.</p>
+
+    <p><b>Theorem (Chain Rule).</b> Let $f: \Real^d \ra \Real^d$ and $g: \Real^d \ra \Real^d$ be differentiable functions. Then, $g\circ f$ is also a differentiable function. Moreover,
+    \begin{align*}
+    \nabla (g\circ f)(x) = \nabla g(f(x)) \nabla f(x).
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>Let $$ f_{\theta_k \dotsm \theta_1} = f_{\theta_k} \circ f_{\theta_{K-1}} \circ \dotsb \circ f_{\theta_2} \circ f_{\theta_1} \circ f_{\theta_1}.$$ Then, we have that
+    \begin{align*}
+    \nabla f_\theta(x)
+    &= \nabla f_{\theta_K \dotsm \theta_1}(x) \\
+    &= \nabla (f_{\theta_K} \circ f_{\theta_{K-1} \dotsm \theta_1})(x) \\
+    &= \nabla f_{\theta_K}(f_{\theta_{K-1} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-1} \dotsm \theta_1}(x) \\
+    &= \nabla f_{\theta_K}(f_{\theta_{K-1} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-1}}(f_{\theta_{K-2} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-2} \dotsm \theta_1}(x) \\
+    &= \nabla f_{\theta_K}(f_{\theta_{K-1} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-1}}(f_{\theta_{K-2} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-2}}(f_{\theta_{K-3} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-3} \dotsm \theta_1}(x) \\
+    &= \nabla f_{\theta_K}(f_{\theta_{K-1} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-1}}(f_{\theta_{K-2} \dotsm \theta_1}(x)) \nabla f_{\theta_{K-2}}(f_{\theta_{K-3} \dotsm \theta_1}(x)) \dotsm \nabla f_{\theta_2}(f_{\theta_1}(x)) \nabla f_{\theta_1}(x). 
+    \end{align*}
+    As a result,
+    \begin{align*}
+    \det \nabla f_\theta(x) &= \prod_{k=1}^K \det \nabla f_{\theta_k}(f_{\theta_{k-1} \dotsm \theta_1}(x)).
+    \end{align*}    
+    Here, we abuse the notation and say that $f_{\theta_0 \cdots \theta_1}(x) = x$. Moreover,
+    \begin{align*}
+    |\det \nabla f_\theta(x)| &= \prod_{k=1}^K |\det \nabla f_{\theta_k}(f_{\theta_{k-1} \dotsm \theta_1}(x))| \\
+    \log |\det \nabla f_\theta(x)| &= \sum_{k=1}^K \log |\det \nabla f_{\theta_k}(f_{\theta_{k-1} \dotsm \theta_1}(x))|.
+    \end{align*}    
+    </p>
+
+
+    <hr>
+    <p>Hence, being able to compute $\log \big|\det \nabla f_\theta(f^{-1}_\theta(x_{\data})) \big|$ quickly only requires being able to compute the determinant of the derivative $\nabla f_{\theta_k}$ quickly for all $k$.</p>
+
+    <hr>
+    <p>People thus try to design $f_{\theta_k}$ so that it has very simple derivatives, like the identity matrix.</p>
+
+    <hr>
+    <p>In conclusion, it is possible to compute the loss and optimize $\theta$ if you are clever about the form of $f_{\theta_k}$.</p>
+
+    <hr>
+    <p>However, the problem with discrete normalizing flow is that it is not very flexible. There is a lot of constraints that must be placed on each $f_{\theta_k}$.</p>
+
+    <ul>
+        <li>$f_{\theta_k}$ must be easy to invert.</li>
+        <li>$f_{\theta_k}$ must have simple derivative matrices.</li>
+    </ul>
+
+    <hr>
+    <p>My impression is that normalizing flow has not been as popular as GAN. When GAN got replaced by diffusion models, normalizing flow also kind of went out of fashion too.</p>
+
+    <hr>
+    <p>
+        <a href="../_0039/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0041/index.html">[&gt;&gt;]</a> 
+    </p>
+</div>
+
+<script type="text/javascript">
+$.bigfoot();
+</script>
+
+</body>
+</html>
+
+

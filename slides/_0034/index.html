@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0031</title>
+    <title>0034</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,19 +81,37 @@
     </span>
 
     <br>
-    <h1>Diffeomorphism (cont.)</h1>
-
-    <hr>    
-    <p>Is a scale-add $\texttt{T}_\mu \circ \texttt{S}_\sigma$ a diffeomorphism?</p>
+    <h1>Generative Modeling</h1>
 
     <hr>
-    <p><b>Answer.</b> If and only if $\sigma \neq 0$.</p>
+    <p><b>Generative modeling</b> is the problem of transforming a noise distribution $p_{\mrm{noise}}$ to a data distribution $p_{\mrm{data}}$.</p>
+
+    <ul>
+        <li>$p_{\mrm{noise}}$ is a well-known distribution, like the standard Gaussian distribution $\mcal{N}(0,I)$.</li>
+        <li>$p_{\mrm{data}}$ is probability distribution you can imagine.</li>
+    </ul>
+    
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/probdist/gaussian_00.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ ??? \ \ \ }$</td>
+            <td><img src="../../data/_20240729/probdist/_02.png" width="500" alt=""></td>
+        </tr>
+        <tr>
+            <td align="center">$p_{\mrm{noise}}$</td>
+            <td></td>
+            <td align="center">$p_{\mrm{data}}$</td>
+        </tr>
+    </table>
+    
+    <br>
+    <p>There's one more constraint. We do not have direct access to $p_{\data}$.<br>We only have samples $x^{(1)}$, $x^{(2)}$, $x^{(3)}$, $\dotsc$, $x^{(N)}$ that comes from the distribution.</p>
 
     <hr>
     <p>
-        <a href="../_0030/index.html">[&lt;&lt;]</a> 
+        <a href="../_0033/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0032/index.html">[&gt;&gt;]</a> 
+        <a href="../_0035/index.html">[&gt;&gt;]</a> 
     </p> 
 </div>
 

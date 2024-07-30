@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0031</title>
+    <title>0039</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,20 +81,56 @@
     </span>
 
     <br>
-    <h1>Diffeomorphism (cont.)</h1>
-
-    <hr>    
-    <p>Is a scale-add $\texttt{T}_\mu \circ \texttt{S}_\sigma$ a diffeomorphism?</p>
+    <h1>Approaches for General Generative Modeling</h1>
 
     <hr>
-    <p><b>Answer.</b> If and only if $\sigma \neq 0$.</p>
+    <p>We have only managed to solve generative modeling in the simplest case: Gaussian to another Gaussian.</p>
+
+    <hr>
+    <p>What do people do when we want to solve the general problem?</p>
+
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/probdist/gaussian_00.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ f \ \ \ }$</td>
+            <td><img src="../../data/_20240729/probdist/_02.png" width="500" alt=""></td>
+        </tr>
+        <tr>
+            <td align="center">$p_{\mrm{noise}}$</td>
+            <td></td>
+            <td align="center">$p_{\mrm{data}}$</td>
+        </tr>
+    </table>
+
+    <hr>
+    <p>Well, we try to model the function $f$ with a neural network $f_\theta$.</p>
+
+    <hr>
+    <h2>One-Step Transformation</h2>
+
+    <p>$f_\theta$ transforms the noise item $x_{\mrm{noise}} \sim p_{\mrm{noise}}$ into a data item $x_{\data}$ in one step.
+    $$x_{\data} = f_\theta(x_{\mrm{noise}}).$$
+    </p>
+    
+    <p>VAEs and GANs uses this approach.</p>
+
+    <p>Actually, for this approach, the size of $x_{\mrm{noise}}$ does not have to match that of $x_{\mrm{data}}$.</p>
+
+    <p>Typically, $x_{\mrm{noise}} \in \Real^d$ and $x_{\mrm{\data}} \in \Real^D$ where $d \ll D$. So, $f$ is not a diffeomorphism per se.</p>
+
+    <p>This approach has difficulties.</p>
+
+    <ul>
+        <li>VAEs have issues with quality of genarated $x_{\mrm{data}}$.</li>
+        <li>GANs can generate high-quality $x_{\mrm{data}}$ but are very difficult to train.</li>
+    </ul>        
 
     <hr>
     <p>
-        <a href="../_0030/index.html">[&lt;&lt;]</a> 
+        <a href="../_0038/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0032/index.html">[&gt;&gt;]</a> 
-    </p> 
+        <a href="../_0040/index.html">[&gt;&gt;]</a> 
+    </p>
 </div>
 
 <script type="text/javascript">

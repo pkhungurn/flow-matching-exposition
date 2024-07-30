@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0031</title>
+    <title>0035</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,20 +81,51 @@
     </span>
 
     <br>
-    <h1>Diffeomorphism (cont.)</h1>
-
-    <hr>    
-    <p>Is a scale-add $\texttt{T}_\mu \circ \texttt{S}_\sigma$ a diffeomorphism?</p>
+    <h1>Push-Forward</h1>
 
     <hr>
-    <p><b>Answer.</b> If and only if $\sigma \neq 0$.</p>
+    <p>How do we transform one probability distribution to another?</p>
+
+    <hr>
+    <p>Here's a simple process. Suppose we start with a probability distribution $p$.</p>
+
+    <ol>
+        <li>Sample $x \sim p$.</li>
+        <li>Perform some transformation on $x$.</li>
+        <li>Return the transformed $x$ to the user.</li>
+    </ol>    
+
+    <hr>
+    <p><b>Definition.</b> Let $p: \Real^d \ra \Real^+ \cup \{ 0\}$ be a probability distribution and $f:\Real^d \ra \Real^d$ be a diffeomorphism. A <b>push-forward</b> (or a <b>change of variable</b>) of $p$ according to $f$ is the probability distribution that is created by the following process.</p>
+
+    <ol>
+        <li>Sample $x \sim p$.</li>
+        <li>Compute $y = f(x)$.</li>
+        <li>Return $y$ to the user.</li>
+    </ol>
+
+    <p>The resulting probability distribution is denoted by $[f]_* p$.</p>
+
+    <hr>
+    <p><b>Theorem (Change-of-Variable Formula).</b> Let $q = [f]_*p$. Then, $$ q(y) = \frac{p(f^{-1}(y))}{|\det \nabla f(f^{-1}(y)) |}. $$</p>
+
+    <hr>
+    <p>The change-of-variable formula above gaurantees that $q$ is a probability density function. In other words,
+    \begin{align*}
+        \int q(y)\, \dee y 
+        = \int \frac{p(f^{-1}(y))}{|\det \nabla f( f^{-1}(y)) |}\, \dee y
+        = \int p(x)\, \dee x
+        = 1.
+    \end{align*}
+    This agrees with the change of variable formula in multi-variable integral calculus.
+    </p>
 
     <hr>
     <p>
-        <a href="../_0030/index.html">[&lt;&lt;]</a> 
+        <a href="../_0034/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0032/index.html">[&gt;&gt;]</a> 
-    </p> 
+        <a href="../_0036/index.html">[&gt;&gt;]</a> 
+    </p>
 </div>
 
 <script type="text/javascript">

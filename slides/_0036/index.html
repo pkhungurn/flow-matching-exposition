@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0031</title>
+    <title>0036</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,20 +81,87 @@
     </span>
 
     <br>
-    <h1>Diffeomorphism (cont.)</h1>
-
-    <hr>    
-    <p>Is a scale-add $\texttt{T}_\mu \circ \texttt{S}_\sigma$ a diffeomorphism?</p>
+    <h1>Push-Forward of Gaussian Distributions</h1>
 
     <hr>
-    <p><b>Answer.</b> If and only if $\sigma \neq 0$.</p>
+    <p>What happen if we push-forward isotropic Gaussians with the vector functions we have seen so far?</p>
 
     <hr>
     <p>
-        <a href="../_0030/index.html">[&lt;&lt;]</a> 
+        Translation of Gaussian. 
+        $$ [\mrm{id} + \mu_1]_* \mcal{N}(\mu_0, \sigma_0^2 I) = \mcal{N}(\mu_0 + \mu_1, \sigma_0^2 I) $$
+    </p>
+
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/probdist/gaussian_00_to_scale.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ \mrm{id} + (1,-1) \ \ \ }$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_03_to_scale.png" width="500" alt=""></td>
+        </tr>
+        <tr>
+            <td align="center">$\mcal{N}(0,I)$</td>
+            <td></td>
+            <td align="center">$\mcal{N}((1,-1),I)$</td>
+        </tr>
+    </table>
+
+    <hr>
+    <p>
+        Uniform scaling of Gaussian.
+        $$ [\sigma_1\, \mrm{id}]_* \mcal{N}(\mu_0, \sigma_0^2 I) = \mcal{N}(\sigma_1 \mu_0, (\sigma_1 \sigma_0)^2 I) $$
+    </p>
+
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/probdist/gaussian_00_to_scale.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ 2\, \mrm{id} \ \ \ }$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_04_to_scale.png" width="500" alt=""></td>
+        </tr>
+        <tr>
+            <td align="center">$\mcal{N}(0,I)$</td>
+            <td></td>
+            <td align="center">$\mcal{N}(0,2^2I)$</td>
+        </tr>
+    </table>
+
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/probdist/gaussian_00_to_scale.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ 0.5\, \mrm{id} \ \ \ }$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_05_to_scale.png" width="500" alt=""></td>
+        </tr>
+        <tr>
+            <td align="center">$\mcal{N}(0,I)$</td>
+            <td></td>
+            <td align="center">$\mcal{N}(0,0.5^2I)$</td>
+        </tr>
+    </table>
+    
+    <hr>
+    <p>
+        Scale-add of Gaussian.
+        $$ [\sigma_1\, \mrm{id} + \mu_1]_* \mcal{N}(\mu_0, \sigma_0^2 I) = \mcal{N}(\sigma_1 \mu_0 + \mu_1, (\sigma_1 \sigma_0)^2 I) $$
+    </p>
+
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/probdist/gaussian_00_to_scale.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ 0.5\, \mrm{id} + (1,-1) \ \ \ }$</td>
+            <td><img src="../../data/_20240729/probdist/gaussian_06_to_scale.png" width="500" alt=""></td>
+        </tr>
+        <tr>
+            <td align="center">$\mcal{N}(0,I)$</td>
+            <td></td>
+            <td align="center">$\mcal{N}((1,-1),0.5^2I)$</td>
+        </tr>
+    </table>
+
+    <hr>
+    <p>
+        <a href="../_0035/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0032/index.html">[&gt;&gt;]</a> 
-    </p> 
+        <a href="../_0037/index.html">[&gt;&gt;]</a> 
+    </p>
 </div>
 
 <script type="text/javascript">
