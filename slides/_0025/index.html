@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0001</title>
+    <title>0025</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,23 +81,41 @@
     </span>
 
     <br>
-    <h1>$\Real^d \ra \Real^d$ as Point Transformation</h1>
-    
-    <hr>    
-    <p>Let $f: \Real^d \ra \Real^d$. We can view it as something that sends a point to another point. It <i>moves</i> a point to a new position.</p>
-    
-    <hr>
-    <p>So, if $x \in \Real^d$. Then, we may view $x$ as a point, and $f(x)$ is the new position of $x$.</p>
+    <h1>Diffeomorphism</h1>
 
-    <img src="images/point-transformation.png" width="400" alt="">
-    
     <hr>    
-    <p>
-        <a href="../_0000/index.html">[&lt;&lt;]</a> 
-        <a href="../../index.html">[Top]</a>
-        <a href="../_0002/index.html">[&gt;&gt;]</a> 
+    <p><b>Definition.</b> A function $f: \Real^d \ra \Real^d$ is called a <b>diffeomorphism</b> if it satisfies the following requirements.</p>
+    <ul>
+        <li>$f$ is a bjection.</li>
+        <li>$f$ is differentiable, meaning that $\nabla f$ exists and is well-defined.</li>
+        <li>$\nabla f(x)$ is a continous function of $x$.</li>
+    </ul>
+
+    <hr>
+    <p>A bijection is a function that is one-to-one and onto.</p>
+
+    <hr>
+    <p>If $f$ is a bijection, then it has an inverse function $f^{-1}$.</p>
+
+    <hr>
+    <p><b>Theorem (Inverse Function Theorem).</b> Let $f: \Real^d \ra \Real^d$ be a diffeomorphism. Then, $f^{-1}$ is also a diffeomorphism. 
+    Moreover, we have that $\nabla f(x)$ is an invertible matrix for all $x \in \Real^d$, and
+    $$ \nabla f^{-1}(y) = \Big( \nabla f\big(f^{-1}(y)\big) \Big)^{-1} $$
+    for all $y \in \Real^d$.
     </p>
-    
+
+    <hr>
+    <p>I don't remember how to prove this, but we should have learned this once in one of our calculus classes.</p>
+
+    <hr>
+    <p><b>Corollary.</b> If $f$ is a diffeomorphism, then, for all $x$, $$\det \nabla f(x) \neq 0.$$</p>
+
+    <hr>
+    <p>
+        <a href="../_0024/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0026/index.html">[&gt;&gt;]</a> 
+    </p>    
 </div>
 
 <script type="text/javascript">

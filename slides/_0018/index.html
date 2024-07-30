@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0001</title>
+    <title>0018</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,23 +81,71 @@
     </span>
 
     <br>
-    <h1>$\Real^d \ra \Real^d$ as Point Transformation</h1>
-    
-    <hr>    
-    <p>Let $f: \Real^d \ra \Real^d$. We can view it as something that sends a point to another point. It <i>moves</i> a point to a new position.</p>
+    <h1>Notation for Derivatives</h1>
     
     <hr>
-    <p>So, if $x \in \Real^d$. Then, we may view $x$ as a point, and $f(x)$ is the new position of $x$.</p>
+    <p>There are many notations for derivatives: $Df(x)$, $\partial f/\partial x$, $J_f(x)$, and so on.</p>
 
-    <img src="images/point-transformation.png" width="400" alt="">
-    
-    <hr>    
+    <hr>
+    <p>I'm going to use an unconventional one: $\nabla f(x)$.</p>
+
+    <hr>
     <p>
-        <a href="../_0000/index.html">[&lt;&lt;]</a> 
-        <a href="../../index.html">[Top]</a>
-        <a href="../_0002/index.html">[&gt;&gt;]</a> 
+        If $f$ is a vector function of signature $\Real^n \rightarrow \Real^m$,<br>
+        then $\nabla f$, the derivative of $f$, is a function of signature $f: \Real^n \ra \Real^{m \times n}$.
     </p>
-    
+
+    <hr>
+    <p>
+        If $f$ is a vector function of signature $\Real^n \rightarrow \Real$ (a scalar field),<br>
+        then $\nabla f$, the derivative of $f$, is a function of signature $f: \Real^n \ra \Real^{1 \times n}$.<br>
+        We can interpret a matrix of size $\Real^{1 \times n}$ as a vector, and this is exactly the <b>gradient</b> of $f$.<br>
+        So, I think the notation $\nabla f$ is justified because it agrees with the notation for gradients.
+    </p>
+
+    <hr>
+    <p>If
+    \begin{align*}
+        f(x) = \begin{bmatrix}
+            f^1(x) \\ f^2(x) \\ \vdots \\ f^m(x)
+        \end{bmatrix}
+    \end{align*}
+    where each $f^i$ is of signature $\Real^n \ra \Real$, then
+    \begin{align*}
+    \nabla f(x) = \begin{bmatrix}
+        \frac{\partial f^1}{\partial x^1}(x) & \frac{\partial f^1}{\partial x^2}(x) & \cdots & \frac{\partial f^1}{\partial x^n}(x) \\
+        \frac{\partial f^2}{\partial x^1}(x) & \frac{\partial f^2}{\partial x^2}(x) & \cdots & \frac{\partial f^2}{\partial x^n}(x) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \frac{\partial f^m}{\partial x^1}(x) & \frac{\partial f^m}{\partial x^2}(x) & \cdots & \frac{\partial f^m}{\partial x^n}(x)
+    \end{bmatrix}.
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>I will sometimes denote partial derivatives also with the $\nabla$ notation.
+    \begin{align*}
+        \nabla_{j} f^i = \frac{\partial f^i}{\partial x^j}.
+    \end{align*}
+    This is quite nice because the position of $j$ and $i$ indicates which one should go to the top and which one should go to the bottom.</p>
+
+    <hr>
+    <p>In other words, we can write
+    \begin{align*}
+    \nabla f(x) = \begin{bmatrix}
+        \nabla_1f^1(x) & \nabla_2f^1(x) & \cdots & \nabla_nf^1(x) \\
+        \nabla_1f^2(x) & \nabla_2f^2(x) & \cdots & \nabla_nf^2(x) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \nabla_1f^m(x) & \nabla_2f^m(x) & \cdots & \nabla_nf^m(x) \\
+    \end{bmatrix}.
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>
+        <a href="../_0017/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0019/index.html">[&gt;&gt;]</a> 
+    </p>    
 </div>
 
 <script type="text/javascript">

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0001</title>
+    <title>0030</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,23 +81,42 @@
     </span>
 
     <br>
-    <h1>$\Real^d \ra \Real^d$ as Point Transformation</h1>
-    
+    <h1>Probability Distribution</h1>
+
     <hr>    
-    <p>Let $f: \Real^d \ra \Real^d$. We can view it as something that sends a point to another point. It <i>moves</i> a point to a new position.</p>
+    <p>We saw that a vector function can transform images.</p>
+
+    <hr>
+    <p>A probability distribution $p: \Real^d \ra \Real^{+} \cup \{0 \}$ (or a probability density function) is a special kind of image. It has the property that
+    \begin{align*}
+    \int p(x)\, \dee x = 1.
+    \end{align*}
+    Here, the integration domain is the whole $\Real^d$.
+    </p>
+
+    <hr>
+    <p><b>Question.</b> What does $p(x)$ mean?</p>
+
+    <p><b>Answer.</b> Let's say $x = (x^1, x^2, \dotsc, x^d)$. It means that, in the infinitesimally small volume 
+    $$[x^1, x^1+ \dee x^1) \times [x^2, x+ \dee x^2) \times \dotsb \times [x^d, x+ \dee x^d)$$
+    that contains $x$, there exists "probability mass" in this volume, and the amount of this probability mass is
+    \begin{align*}
+        p(x)\, \dee x = p(x)\, \dee x^1 \dee x^2 \dotsm \dee x^d.
+    \end{align*}
+    Here, each $\dee x^i$ is an infinitesimally small quantity such that $(\dee x^i)^2 = 0$.
+    </p>
+
+    <p>(This is hand-wavy physics math. Use with caution.)</p>
+
+    <hr>
+    <p>We can visualize probability distributions by rendering it has a heatmap over some space.</p>
     
     <hr>
-    <p>So, if $x \in \Real^d$. Then, we may view $x$ as a point, and $f(x)$ is the new position of $x$.</p>
-
-    <img src="images/point-transformation.png" width="400" alt="">
-    
-    <hr>    
     <p>
-        <a href="../_0000/index.html">[&lt;&lt;]</a> 
+        <a href="../_0031/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0002/index.html">[&gt;&gt;]</a> 
-    </p>
-    
+        <a href="../_0033/index.html">[&gt;&gt;]</a> 
+    </p> 
 </div>
 
 <script type="text/javascript">

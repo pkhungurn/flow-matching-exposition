@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0001</title>
+    <title>0029</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,23 +81,32 @@
     </span>
 
     <br>
-    <h1>$\Real^d \ra \Real^d$ as Point Transformation</h1>
-    
-    <hr>    
-    <p>Let $f: \Real^d \ra \Real^d$. We can view it as something that sends a point to another point. It <i>moves</i> a point to a new position.</p>
-    
-    <hr>
-    <p>So, if $x \in \Real^d$. Then, we may view $x$ as a point, and $f(x)$ is the new position of $x$.</p>
+    <h1>Diffeomorphism (cont.)</h1>
 
-    <img src="images/point-transformation.png" width="400" alt="">
-    
     <hr>    
+    <p>Is a uniform scaling $\texttt{S}_\sigma$ a diffeomorphism?</p>
+
+    <hr>
+    <p>Not always.</p>
+
+    <hr>
+    <p>If $\sigma = 0$, then $\texttt{S}_\sigma$ is not a diffeomorphism because $$ \texttt{S}_0(x) = 0$$ for all $x$, so it is clearly not a bijection</p>
+
+    <hr>
+    <p>If $\sigma \neq 0$, then $\texttt{S}_\sigma$ is a diffeomorphism.</p>
+
+    <ul>
+        <li>It is a bijection. It has an inverse $$ \texttt{S}_{\sigma}^{-1} = \texttt{S}_{1/\sigma}.$$</li>
+        <li>It has a well-defined derivative. $$\nabla \texttt{S}_{\sigma}(x) = \sigma I.$$</li>
+        <li>Its derivative is a constant function, which is continuous.</li>
+    </ul>
+
+    <hr>
     <p>
-        <a href="../_0000/index.html">[&lt;&lt;]</a> 
+        <a href="../_0028/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0002/index.html">[&gt;&gt;]</a> 
-    </p>
-    
+        <a href="../_0030/index.html">[&gt;&gt;]</a> 
+    </p> 
 </div>
 
 <script type="text/javascript">

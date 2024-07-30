@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0001</title>
+    <title>0017</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,23 +81,37 @@
     </span>
 
     <br>
-    <h1>$\Real^d \ra \Real^d$ as Point Transformation</h1>
-    
-    <hr>    
-    <p>Let $f: \Real^d \ra \Real^d$. We can view it as something that sends a point to another point. It <i>moves</i> a point to a new position.</p>
+    <h1>Derivative of a Vector Function</h1>
     
     <hr>
-    <p>So, if $x \in \Real^d$. Then, we may view $x$ as a point, and $f(x)$ is the new position of $x$.</p>
+    <p><b>Answer.</b> The derivative of $f: \Real^n \ra \Real^m$ has signature $\Real^n \ra \Real^{m \times n}$.</p>
 
-    <img src="images/point-transformation.png" width="400" alt="">
+    <hr>
+    <p>If $f$ sends an $n$-dim vector to an $m$-dim vector,<br>then the derivative of $f$ sends $n$-dim vector to a matrix of shape $m \times n$.</p>
+
+    <hr>
+    <p>Derivative of scalar function can be written in a different way.</p>
     
-    <hr>    
+    <p><b>Definition.</b> Let $f: \Real \ra \Real$ be scalar function. The <b>derivative of $f$ at $x$</b> is the real number $a \in \Real$ such that $$\lim_{h \rightarrow 0} \frac{|f(x+h) - (f(x) + ah)|}{|h|} = 0.$$ A function that sends $x$ to the derivative of $f$ at $x$ is called the <b>derivative of $f$</b> and is denoted by $f'$.</p>
+
+    <hr>
+    <p>Derivative of a vector function can be defined in a similar way.</p>
+
+    <p><b>Definition.</b> Let $f: \Real^n \ra \Real^m$ be vector function. The <b>derivative of $f$ at $x$</b> is the $m \times n$ matrix $A$ such that $$\lim_{h \rightarrow 0} \frac{\|f(x+h) - (f(x) + Ah)\|}{\|h\|} = 0.$$ A function that sends $x$ to the derivative of $f$ at $x$ is called the <b>derivative of $f$</b>.</p>
+
+    <hr>
+    <p>In other words, near $x$, the value of $f$ can be approximated well by $f(x+h) \approx f(x) + Ah$.</p>
+
+    <hr>
+    <p>Some times, the derivative of $f$ at $x$ is called the <b>Jacobian matrix</b> of $f$ at $x$.</p>
+
+
+    <hr>
     <p>
-        <a href="../_0000/index.html">[&lt;&lt;]</a> 
+        <a href="../_0016/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0002/index.html">[&gt;&gt;]</a> 
-    </p>
-    
+        <a href="../_0018/index.html">[&gt;&gt;]</a> 
+    </p>    
 </div>
 
 <script type="text/javascript">

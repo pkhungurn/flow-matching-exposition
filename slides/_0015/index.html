@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0001</title>
+    <title>0015</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -81,23 +81,65 @@
     </span>
 
     <br>
-    <h1>$\Real^d \ra \Real^d$ as Point Transformation</h1>
+    <h1>Scale-Add</h1>
     
     <hr>    
-    <p>Let $f: \Real^d \ra \Real^d$. We can view it as something that sends a point to another point. It <i>moves</i> a point to a new position.</p>
+    <p>The answer is (c)</p>      
     
     <hr>
-    <p>So, if $x \in \Real^d$. Then, we may view $x$ as a point, and $f(x)$ is the new position of $x$.</p>
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/scaleadds/hoshihina_original.png" width="500" alt=""></td>
+            <td>$\xrightarrow{\ \ \ f\ \ \ }$</td>
+            <td><img src="../../data/_20240729/scaleadds/hoshihina_scaleadd_02.png" width="500" alt=""></td>
+        </tr>        
+    </table>
 
-    <img src="images/point-transformation.png" width="400" alt="">
-    
-    <hr>    
-    <p>
-        <a href="../_0000/index.html">[&lt;&lt;]</a> 
-        <a href="../../index.html">[Top]</a>
-        <a href="../_0002/index.html">[&gt;&gt;]</a> 
+    <hr>
+    <p>How do you know? Well,
+    \begin{align*}
+        f(x) &= 2x + (1,-1) = \texttt{T}_{(1,-1)}(2x) = \texttt{T}_{(1,-1)}(\texttt{S}_2(x)) = (\texttt{T}_{(1,-1)} \circ \texttt{S}_2)(x).
+    \end{align*}
+    So,
     </p>
+
+    <ol>
+        <li>You double the size of the image first.</li>
+        <li>Then you move it one unit to the left and then one unit down.</li>
+    </ol>
+
+    <table>        
+        <tr>
+            <td><img src="../../data/_20240729/scaleadds/hoshihina_original.png" width="300" alt=""></td>
+            <td>$\xrightarrow{\ \ \ \texttt{S}_{2}\ \ \ }$</td>
+            <td><img src="../../data/_20240729/scaleadds/hoshihina_scaleadd_01.png" width="300" alt=""></td>
+            <td>$\xrightarrow{\ \ \ \texttt{T}_{(1,-1)}\ \ \ }$</td>
+            <td><img src="../../data/_20240729/scaleadds/hoshihina_scaleadd_02.png" width="300" alt=""></td>
+        </tr>        
+    </table>
+
+    <hr>
+    <p><b>Definition.</b> A <b>scale-add</b> is a vector function $f: \Real^d \rightarrow \Real^d$ of the form $$f(x) = \sigma x + \mu$$ where $\sigma \in \Real$ and $\mu \in \Real^d$.</p>    
+
+    <hr>
+    <p>There are two ways to denote a scale-add.</p>
+
+    <ul>
+        <li>$\texttt{T}_{\mu} \circ \texttt{S}_\sigma$</li>
+        <li>$\sigma\, \mrm{id} + \mu$</li>
+    </ul>
+
+    <p>So, $$ (\texttt{T}_{\mu} \circ \texttt{S}_\sigma)(x) = (\sigma\, \mrm{id} + \mu)(x) = \sigma x + \mu.$$</p>
+
+    <hr>
+    <p>A scale-add <b>always scales before adds</b>.</p>
     
+    <hr>
+    <p>
+        <a href="../_0014/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0016/index.html">[&gt;&gt;]</a> 
+    </p>            
 </div>
 
 <script type="text/javascript">
