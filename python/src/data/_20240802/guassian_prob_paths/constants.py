@@ -1,0 +1,3 @@
+from data._20240802.constants import DATA_20240802_PREFIX
+
+DATA_20240802_GAUSSIAN_PROB_PATHS_PREFIX = f"{DATA_20240802_PREFIX}/gaussian_prob_paths"
