@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0044</title>
+    <title>0050</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -80,54 +80,71 @@
         \)
     </span>
 
-    <h1>Generating Probability Paths with Flows</h1>
+    <h1>Displacement Interpolation</h1>
 
     <hr>
-    <p>In generative modeling, we typically do not care about the exact form of probability distribution.<br> We may just want to sample from $p_{\data}$.</p>
+    <p>In the last slide, we know that $$\phi_t(x) = \frac{\sigma_t}{\sigma_0}(x - \mu_0) + \mu_t$$
+    is a flow if $\mu_t$ and $\phi_t$ are differentiable. If you use this flow to push forward a Gaussian $\mcal{N}(\mu_0, \sigma_0^2I)$, then you get a probabilty path $$p_t = \mcal{N}(\mu_t, \sigma_t^2 I)$$
+    that continuously transforms $\mcal{N}(\mu_0,\sigma_0^2 I)$ to $\mcal{N}(\mu_1,\sigma_1^2 I)$ over the time interval $0 \leq t \leq 1$.
+    </p>
 
     <hr>
-    <p>In case of a probability path $p_t$, we do not care about the exact form of $p_t$.<br> We just want to sample from it.</p>
-
-    <hr>
-    <p>This is just like a transformation of probability distribution by a push-forward $q = [f]_* p$</p>
-
-    <ul>
-        <li>We know how to sample from $p$.</li>
-        <li>We know how to apply $f$.</li>
-        <li>Notice that we don't know anything about $q$, but we can sample from it by just knowing the two items above.</li>
-    </ul>
-
-    <hr>
-    <p>There's an analogue of the push-foward for probability flow. However, it requires one new concept.</p>
-
-    <hr>
-    <p><b>Definition.</b> A <b>flow</b> $\phi$ in an indexed famility of vector functions $\{ \phi_t : t \in \Real \}$ that satisfies the following property.</p>
-
-    <ul>
-        <li>Each $\phi_t$ has signature $\Real^d \ra \Real^d$.</li>
-        <li>$\phi_0 = \mrm{id}$.</li>
-        <li>$\phi_t$ is a diffeomorphism.</li>
-        <li>When $\phi$ is viewed as function $\phi(t,x)$ of signature $\Real^{d+1} \ra \Real^d$ is differentiable.</li>
-    </ul>
-
-    <hr>
-    <p><b>Definition.</b> A <b>push-forward</b> of probability distribution $p$ according to a flow $\phi_t$ is probability path $p_t$ defined by $p_t = [\phi_t]_* p$.</p>
-
-    <hr>
-    <p>So, to sample from $p_t$ which is the push-forward of $p$ according to $\phi_t$, we do the following.</p>
-
-    <ol>
-        <li>Sample $x \sim p$.</li>
-        <li>Compute $x_t = \phi_t(x)$.</li>
-        <li>Return $x_t$ to the user.</li>
-    </ol>
+    <p>Let's look at the special case where $\mu_t$ and $\sigma_t$ are linear interpolations of the end values.
+    \begin{align*}
+    \mu_t &= (1 - t)\mu_0 + t \mu_1 \\
+    \sigma_t &= (1-t)\sigma_0 + t \sigma_t \\
+    \end{align*}
+    In this case, we have that
+    \begin{align*}
+      \phi_t(x) 
+      &= \frac{(1-t)\sigma_0 + t\sigma_1}{\sigma_0}(x - \mu_0) + (1-t)\mu_0 + t \mu_1 \\
+      &= (1-t)(x-\mu) + (1-t)\mu_0 + t \bigg[ \frac{\sigma_1}{\sigma_0} (x - \mu_0) + \mu_1 \bigg] \\
+      &= (1-t)x + t \bigg[ \frac{\sigma_1}{\sigma_0} (x - \mu_0) + \mu_1 \bigg].
+    \end{align*}
+    Let $$\varphi(x) = \frac{\sigma_1}{\sigma_0} (x - \mu_0) + \mu_1.$$  We know that
+    \begin{align*}
+      \mcal{N}(\mu_1, \sigma_1^2 I) = [\varphi]_* \mcal{N}(\mu_0, \sigma_0^2 I).
+    \end{align*}
+    We also have that
+    \begin{align*}
+      \phi_t(x) = (1-t)x + t\varphi(x) = (1-t)\mrm{id}(x) = t\varphi(x).
+    \end{align*}  
+    So, it seems that $\phi_t$ is a linear interpolation between two functions:
+    \begin{align*}
+      \phi_t = (1-t)\mrm{id} + t\varphi.
+    \end{align*}
+    This type of flow has a special name.
+    </p>
 
     <hr>
     <p>
-        <a href="../_0043/index.html">[&lt;&lt;]</a> 
-        <a href="../../index.html">[Top]</a>
-        <a href="../_0045/index.html">[&gt;&gt;]</a> 
+    <b>Definition.</b> Let $\phi: \Real^d \ra \Real^d$ be a diffeomorphism. The <b>displacement interpolation of $\phi$</b> is a flow defined by
+    \begin{align*}
+      \phi_t = (1-t)\mrm{id} + t\varphi.
+    \end{align*}
     </p>
+
+    <hr>
+    <p>Given two Gaussian $\mcal{N}(\mu_0, \sigma_0^2I)$ and $\mcal{N}(\mu_1, \sigma_1^2I)$, let $\varphi(x)$ be the diffeomorphism
+    \begin{align*}
+      \varphi(x) = \frac{\sigma_1}{\sigma_0} (x - \mu_0) + \mu_1.
+    \end{align*}
+    We have that $$\mcal{N}(\mu_1, \sigma_1^2 I) = [\varphi]_* \mcal{N}(\mu_0, \sigma_0^2 I).$$ Moreover, the displacement interpolation of $\phi_t = (1-t)\mrm{id} + t\varphi$ is a flow that gives rise to a probability path between $\mcal{N}(\mu_0, \sigma_0^2 I)$ and $\mcal{N}(\mu_1, \sigma_1^2 I)$. Moreover, we know that the path is "straight."    
+    </p>
+
+    <ul>
+      <li>The mean moves in a straight line.</li>
+      <li>The standard deviation changes linearly with time.</li>
+    </ul>
+
+    <hr>
+    <p>
+        <a href="../_0049/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0051/index.html">[&gt;&gt;]</a> 
+    </p>
+
+    
 </div>
 
 <script type="text/javascript">

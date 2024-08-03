@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0044</title>
+    <title>0047</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -80,53 +80,36 @@
         \)
     </span>
 
-    <h1>Generating Probability Paths with Flows</h1>
+    <h1>An Example Flow</h1>
 
     <hr>
-    <p>In generative modeling, we typically do not care about the exact form of probability distribution.<br> We may just want to sample from $p_{\data}$.</p>
-
-    <hr>
-    <p>In case of a probability path $p_t$, we do not care about the exact form of $p_t$.<br> We just want to sample from it.</p>
-
-    <hr>
-    <p>This is just like a transformation of probability distribution by a push-forward $q = [f]_* p$</p>
+    <p>The function $$\phi_t(x) = x + (t,0)$$ is a flow.</p>
 
     <ul>
-        <li>We know how to sample from $p$.</li>
-        <li>We know how to apply $f$.</li>
-        <li>Notice that we don't know anything about $q$, but we can sample from it by just knowing the two items above.</li>
+      <li>$\phi_0(x) = x + (0,0) = x$.</li>
+      <li>The derivative is given by
+        \begin{align*}
+          \nabla \phi_t(x) 
+          = \nabla \begin{bmatrix} x^1 + t \\ x^2 \\ \end{bmatrix}
+          = \begin{bmatrix}
+            \frac{\partial (x^1 + t)}{\partial t} & \frac{\partial (x^1 + t)}{\partial x^1} & \frac{\partial (x^1 + t)}{\partial x^2} \\
+            \frac{\partial x^2}{\partial t} & \frac{\partial x^2}{\partial x^1} & \frac{\partial x^2}{\partial x^2}          
+          \end{bmatrix}
+          = \begin{bmatrix}
+            1 & 1 & 0 \\
+            0 & 0 & 1
+          \end{bmatrix}.
+        \end{align*}
+        So, $\phi$ is a differentiable function.
+      </li>
+      <li>$\phi_t$ as a function of signature $\Real^d \ra \Real^d$ is the translation $\texttt{T}_{(t,0)}$. So it is a diffeomorphism.</li>
     </ul>
-
-    <hr>
-    <p>There's an analogue of the push-foward for probability flow. However, it requires one new concept.</p>
-
-    <hr>
-    <p><b>Definition.</b> A <b>flow</b> $\phi$ in an indexed famility of vector functions $\{ \phi_t : t \in \Real \}$ that satisfies the following property.</p>
-
-    <ul>
-        <li>Each $\phi_t$ has signature $\Real^d \ra \Real^d$.</li>
-        <li>$\phi_0 = \mrm{id}$.</li>
-        <li>$\phi_t$ is a diffeomorphism.</li>
-        <li>When $\phi$ is viewed as function $\phi(t,x)$ of signature $\Real^{d+1} \ra \Real^d$ is differentiable.</li>
-    </ul>
-
-    <hr>
-    <p><b>Definition.</b> A <b>push-forward</b> of probability distribution $p$ according to a flow $\phi_t$ is probability path $p_t$ defined by $p_t = [\phi_t]_* p$.</p>
-
-    <hr>
-    <p>So, to sample from $p_t$ which is the push-forward of $p$ according to $\phi_t$, we do the following.</p>
-
-    <ol>
-        <li>Sample $x \sim p$.</li>
-        <li>Compute $x_t = \phi_t(x)$.</li>
-        <li>Return $x_t$ to the user.</li>
-    </ol>
 
     <hr>
     <p>
-        <a href="../_0043/index.html">[&lt;&lt;]</a> 
+        <a href="../_0046/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0045/index.html">[&gt;&gt;]</a> 
+        <a href="../_0048/index.html">[&gt;&gt;]</a> 
     </p>
 </div>
 

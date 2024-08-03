@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0044</title>
+    <title>0049</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -80,53 +80,50 @@
         \)
     </span>
 
-    <h1>Generating Probability Paths with Flows</h1>
+    <h1>Flow for Gaussian Probability Path</h1>
 
     <hr>
-    <p>In generative modeling, we typically do not care about the exact form of probability distribution.<br> We may just want to sample from $p_{\data}$.</p>
+    <p>We studied probability path $$p_t = \mcal{N}(\mu_t, \sigma_t^2 I)$$ where $\mu_t: \Real \ra \Real^d$ and $\sigma_t: \Real \ra \Real^+$ are continuous functions. <br>This path represents a smooth transition from one isotropic Gaussian $\mcal{N}(\mu_0, \sigma_0^2 I)$ to another $\mcal{N}(\mu_1, \sigma_1^2 I)$.</p>
 
     <hr>
-    <p>In case of a probability path $p_t$, we do not care about the exact form of $p_t$.<br> We just want to sample from it.</p>
+    <p>Could this path have been a result of pushing the initial distribution $p_0$ with a flow $\phi_t$?</p>
 
     <hr>
-    <p>This is just like a transformation of probability distribution by a push-forward $q = [f]_* p$</p>
+    <p>Well yes.</p>
+
+    <p>Let's assume such a flow exists. Then, we would have that $p_t = [\phi_t]_* p_0$. This it means that $$\mcal{N}(\mu_t, \sigma_t^2 I) = [\phi_t]_* \mcal{N}(\mu_0, \sigma_0^2 I).$$ We know that
+    $$\phi_t(x) = \frac{\sigma_t}{\sigma_0} (x - \mu_0) + \mu_t$$
+    satisfies the above condition. So, actually, the probability path $p_t$ is the result of pushing $p_0$ forward with the above $\phi_t$.
+    </p>
+
+    <hr>
+    <p>Let's do some sanity checks. Is $\phi_t$ a flow?</p>
 
     <ul>
-        <li>We know how to sample from $p$.</li>
-        <li>We know how to apply $f$.</li>
-        <li>Notice that we don't know anything about $q$, but we can sample from it by just knowing the two items above.</li>
+      <li>$\phi_0(x) = \frac{\sigma_0}{\sigma_0} (x - \mu_0) + \mu_0 = x$.</li>      
+      <li>Each $\phi_t$ is a scale-add. We know that a scale-add is a diffeomorphism if the scaling coefficient is not zero, and $\sigma_t / \sigma_0 \neq 0$.</li>
+      <li>The derivative of the flow is given by
+      \begin{align*}
+        \nabla \phi_t(x) = \nabla \begin{bmatrix} 
+          \sigma_t(x^1 - \mu_0^1)/\sigma_0 + \mu_t^1 \\
+          \sigma_t(x^2 - \mu_2^1)/\sigma_2 + \mu_2^1
+        \end{bmatrix}
+        &= \begin{bmatrix}
+          \sigma_t'(x^1 - \mu_0^1)/\sigma_0 + \{\mu_t^1\}' & \sigma_t & 0 \\
+          \sigma_t'(x^2 - \mu_0^1)/\sigma_0 + \{\mu_t^2\}' & 0 & \sigma_t.
+        \end{bmatrix}
+      \end{align*}
+      Actually, the deritive might not exist if $\sigma_t'$ and $\mu_t'$ do not exist.
+      </li>
     </ul>
 
-    <hr>
-    <p>There's an analogue of the push-foward for probability flow. However, it requires one new concept.</p>
-
-    <hr>
-    <p><b>Definition.</b> A <b>flow</b> $\phi$ in an indexed famility of vector functions $\{ \phi_t : t \in \Real \}$ that satisfies the following property.</p>
-
-    <ul>
-        <li>Each $\phi_t$ has signature $\Real^d \ra \Real^d$.</li>
-        <li>$\phi_0 = \mrm{id}$.</li>
-        <li>$\phi_t$ is a diffeomorphism.</li>
-        <li>When $\phi$ is viewed as function $\phi(t,x)$ of signature $\Real^{d+1} \ra \Real^d$ is differentiable.</li>
-    </ul>
-
-    <hr>
-    <p><b>Definition.</b> A <b>push-forward</b> of probability distribution $p$ according to a flow $\phi_t$ is probability path $p_t$ defined by $p_t = [\phi_t]_* p$.</p>
-
-    <hr>
-    <p>So, to sample from $p_t$ which is the push-forward of $p$ according to $\phi_t$, we do the following.</p>
-
-    <ol>
-        <li>Sample $x \sim p$.</li>
-        <li>Compute $x_t = \phi_t(x)$.</li>
-        <li>Return $x_t$ to the user.</li>
-    </ol>
+    <p>So, $\phi_t$ is a flow if and only if $\mu_t$ and $\phi_t$ are differentiable.</p>
 
     <hr>
     <p>
-        <a href="../_0043/index.html">[&lt;&lt;]</a> 
+        <a href="../_0048/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0045/index.html">[&gt;&gt;]</a> 
+        <a href="../_0050/index.html">[&gt;&gt;]</a> 
     </p>
 </div>
 

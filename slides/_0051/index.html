@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0044</title>
+    <title>0051</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -80,54 +80,56 @@
         \)
     </span>
 
-    <h1>Generating Probability Paths with Flows</h1>
+    <h1>Vector Function as Vector Field</h1>
 
     <hr>
-    <p>In generative modeling, we typically do not care about the exact form of probability distribution.<br> We may just want to sample from $p_{\data}$.</p>
-
-    <hr>
-    <p>In case of a probability path $p_t$, we do not care about the exact form of $p_t$.<br> We just want to sample from it.</p>
-
-    <hr>
-    <p>This is just like a transformation of probability distribution by a push-forward $q = [f]_* p$</p>
+    <p>OK. So far we know how to do generative modeling from one isotropic Gaussian to another.</p>
 
     <ul>
-        <li>We know how to sample from $p$.</li>
-        <li>We know how to apply $f$.</li>
-        <li>Notice that we don't know anything about $q$, but we can sample from it by just knowing the two items above.</li>
+      <li>One shot transformation version:
+      \begin{align*}
+        \varphi(x) = \frac{\sigma_1}{\sigma_0}(x - \mu_0) + \mu_1.
+      \end{align*}
+      </li>
+      <li>Continuous version:
+      \begin{align*}
+        \phi_t(x) = \frac{\sigma_t}{\sigma_0} (x -\mu_0) + \mu_t
+      \end{align*}
+      for any differentiable function $\mu_t$ and $\sigma_t$ that goes from $(\mu_0, \sigma_0)$ to $(\mu_1, \sigma_1)$. In particular,
+      \begin{align*}
+        \phi_t = (1-t) \mrm{id} + t \varphi
+      \end{align*}
+      is the "straight" flow.
+      </li>
     </ul>
 
     <hr>
-    <p>There's an analogue of the push-foward for probability flow. However, it requires one new concept.</p>
+    <p>We still don't know how to solve the problem in general. To do so, we need a more sophisticated way to generate a flow.</p>
 
     <hr>
-    <p><b>Definition.</b> A <b>flow</b> $\phi$ in an indexed famility of vector functions $\{ \phi_t : t \in \Real \}$ that satisfies the following property.</p>
+    <p>The way people do this is by <b>integrating a time-dependent vector field</b>.</p>
+
+    <hr>
+    <p>But hey...</p>
 
     <ul>
-        <li>Each $\phi_t$ has signature $\Real^d \ra \Real^d$.</li>
-        <li>$\phi_0 = \mrm{id}$.</li>
-        <li>$\phi_t$ is a diffeomorphism.</li>
-        <li>When $\phi$ is viewed as function $\phi(t,x)$ of signature $\Real^{d+1} \ra \Real^d$ is differentiable.</li>
+      <li>What does "integrating" mean?</li>
+      <li>What is a "time-dependent vector field?"</li>      
     </ul>
 
     <hr>
-    <p><b>Definition.</b> A <b>push-forward</b> of probability distribution $p$ according to a flow $\phi_t$ is probability path $p_t$ defined by $p_t = [\phi_t]_* p$.</p>
-
-    <hr>
-    <p>So, to sample from $p_t$ which is the push-forward of $p$ according to $\phi_t$, we do the following.</p>
-
-    <ol>
-        <li>Sample $x \sim p$.</li>
-        <li>Compute $x_t = \phi_t(x)$.</li>
-        <li>Return $x_t$ to the user.</li>
-    </ol>
+    <p>Let's start with what a vector field is.</p>
+    
+    
 
     <hr>
     <p>
-        <a href="../_0043/index.html">[&lt;&lt;]</a> 
+        <a href="../_0050/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0045/index.html">[&gt;&gt;]</a> 
+        <a href="../_0052/index.html">[&gt;&gt;]</a> 
     </p>
+
+    
 </div>
 
 <script type="text/javascript">
