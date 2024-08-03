@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0051</title>
+    <title>0052</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -80,102 +80,42 @@
         \)
     </span>
 
-    <h1>Vector Function as Vector Field</h1>
+    <h1>Time-Dependent Vector Field</h1>
 
     <hr>
-    <p>OK. So far we know how to do generative modeling from one isotropic Gaussian to another.</p>
-
-    <ul>
-      <li>One shot transformation version:
-      \begin{align*}
-        \varphi(x) = \frac{\sigma_1}{\sigma_0}(x - \mu_0) + \mu_1.
-      \end{align*}
-      </li>
-      <li>Continuous version:
-      \begin{align*}
-        \phi_t(x) = \frac{\sigma_t}{\sigma_0} (x -\mu_0) + \mu_t
-      \end{align*}
-      for any differentiable function $\mu_t$ and $\sigma_t$ that goes from $(\mu_0, \sigma_0)$ to $(\mu_1, \sigma_1)$. In particular,
-      \begin{align*}
-        \phi_t = (1-t) \mrm{id} + t \varphi
-      \end{align*}
-      is the "straight" flow.
-      </li>
-    </ul>
+    <p><b>Definition.</b> A <b>time-dependent vector field</b> is just a function of signature $\Real^{d+1} \rightarrow \Real$. We typically view it as a function $v$ of time $t \in \Real$ and position $x \in \Real^d$. The output $v(t,x)$ or $v_t(x)$ is a position in $\Real^d$.</p>
 
     <hr>
-    <p>We still don't know how to solve the problem in general. To do so, we need a more sophisticated way to generate a flow.</p>
+    <p>We often view $v_t$ when $t$ is fixed as a vector field on $\Real^d$.</p>
 
     <hr>
-    <p>The way people do this is by <b>integrating a time-dependent vector field</b>.</p>
+    <p>We visualize a time-dependent vector field with a video of vector fields. You will see arrows dancing.</p>
 
     <hr>
-    <p>But hey...</p>
-
-    <ul>
-      <li>What does "integrating" mean?</li>
-      <li>What is a "time-dependent vector field?"</li>      
-    </ul>
-
-    <hr>
-    <p>Let's start with what a vector field is.</p>
-
-    <hr>
-    <p>We said in the very first slide that there are two interpretations of a vector function $\Real^d \ra \Real^d$.</p>
-
-    <ul>
-      <li>Point transformation.</li>
-      <li>Vector field.</li>
-    </ul>
-    
-    <p>So, a vector field is just a vector function. We see it as associating a $d$-dimensional vector to each point in $\Real^d$.</p>
-
-    <hr>
-    <p>For vectors, we will typically use letters like $u$, $v$, or $w$ instead of $f$, $g$, and $h$.</p>
-
-    <hr>
-    <p>When we visualize a vector field, we draw a lot of arrows on the space.</p>
-
-    <hr>
-    <p>Here's a vector field.
+    <p>Here's a time-dependent vector field.
     \begin{align*}
-      v(x) = (1,0)
+      v_t(x) = \begin{bmatrix}
+        \cos t \\
+        0
+      \end{bmatrix}
     \end{align*}
-    And here's what it looks like.
-    <center>
-      <img src="../../data/_20240803/vector_fields/_00.png" alt="">
-    </center>
-    Note that the arrows are not to scale.
-    </p>
-
-    <hr>
-    <p>Here's another vector field.
-    \begin{align*}
-      v(x) = \begin{bmatrix} -x^2 \\ x^1 \end{bmatrix}
-    \end{align*}
-    And here's what it looks like.
-    <center>
-      <img src="../../data/_20240803/vector_fields/_01.png" alt="">
-    </center>
-    </p>
-
-    <hr>
-    <p>Here's another one.
-    \begin{align*}
-      v(x) = \frac{-x}{\|x|}
-    \end{align*}
-    (This vector field is undefined at $0$.) Here's what it looks like.
-    <center>
-      <img src="../../data/_20240803/vector_fields/_02.png" alt="">
-    </center>
+    It's not a function of $x$, but it is surely a function of $t$. Here's what it looks like when visualized.
     </p>
     
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+      <source src="../../data/_20240803/tdvf/_00/frame_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+    
+    <br>
+    <p>Again, the arrows are not to scale.</p>
 
     <hr>
     <p>
-        <a href="../_0050/index.html">[&lt;&lt;]</a> 
+        <a href="../_0051/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0052/index.html">[&gt;&gt;]</a> 
+        <a href="../_0053/index.html">[&gt;&gt;]</a> 
     </p>
 
     

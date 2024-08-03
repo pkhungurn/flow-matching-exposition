@@ -1,3 +1,8 @@
+from typing import Tuple
+
+import numpy
+from matplotlib import pyplot
+
 from data._20240802.constants import DATA_20240802_PREFIX
 from data._20240802.gaussian_viz.constants import DATA_20240802_GAUSSIAN_VIZ_PREFIX
 from data._20240802.gaussian_viz.tasks import define_data_20240802_gaussian_viz_tasks
