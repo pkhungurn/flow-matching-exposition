@@ -33,10 +33,6 @@
     <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <div class="container">
@@ -129,7 +125,7 @@
     </p>
 
     <hr>
-    <p><b>Definition.</b> A function $f: \Real^d \ra \Real^d$ is Lipschitz continuous if there is a constant $K \geq 0$ such that $$\|f(x) - f(y)\| \geq K\|x-y\|$$ for all $x,y \in \Real$.</p>
+    <p><b>Definition.</b> A function $f: \Real^d \ra \Real^d$ is Lipschitz continuous if there is a constant $K \geq 0$ such that $$\|f(x) - f(y)\| \leq K\|x-y\|$$ for all $x,y \in \Real^d$.</p>
 
     <hr>
     <p>So, <i>mathematicians</i> say $\phi_t$ is a flow if $v$ is differentiable in $x$ and the conditions of the Picard&mdash;Lindelöf is true.</p>
