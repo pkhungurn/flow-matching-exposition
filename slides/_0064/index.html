@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0056</title>
+    <title>0064</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -83,58 +83,65 @@
         \)
     </span>
 
-    <h1>Push-Forward by a Vector Field</h1>
-    
+    <h1>Conditional Flow Matching Loss</h1>
+
     <hr>
-    <p><b>Definition.</b> Let $v_t$ be a differentiable vector field such that it generates a flow $\phi_t$. Let $p_t$ be a probability path. We say that <b>$v_t$ generates $p_t$</b> if $p_t$ is a result of a push-foward of $p_0$ by $\phi_t$. In other words,
+    <p>Recall the flow matching loss.
     \begin{align*}
-      p_t = [\phi_t]_* p_0.
+      \mcal{L}_{\mrm{FM}}(\theta) = E_{\substack{t \sim \mcal{U}([0,1]), \\ x \sim p_t }} \big[ \| v_t(x) - v(t, x; \theta) \|^2 \big].
     \end{align*}
     </p>
 
     <hr>
-    <p>Basically, if we have a time-dependent vector field, we can generate a probability path as follows.</p>
+    <p>From the last slide, we know exactly what $p_t$ is.
+    \begin{align*}
+    \int p_t(x|x_{\data}) p_{\data}(x_{\data})\, \dee x_{\data}.
+    \end{align*}
+    We can sample from $p_t$ quite easily too.
+    </p>
 
-    <table>
-      <tr>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frame_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240802/gaussian_prob_paths/path_02/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>        
-      </tr>
-      <tr>
-        <td align="center">time-dependent vector field $v_t$</td>
-        <td></td>
-        <td align="center">flow $\phi_t$</td>
-        <td></td>
-        <td align="center">probability path $p_t = [\phi_t]_* p_0$</td>
-      </tr>
-    </table>
+    <ol>
+      <li>Uniformly selet $x_{\data}$ from the samples that we have.</li>
+      <li>Sample $x$ from $p_t(x|x_{\data})$, which is just a Gaussian distribution.</li>
+    </ol>
 
     <hr>
-    <p>
-        <a href="../_0055/index.html">[&lt;&lt;]</a> 
-        <a href="../../index.html">[Top]</a>
-        <a href="../_0057/index.html">[&gt;&gt;]</a> 
+    <p>We also know a vector field $v_t(x)$ that works. However, the definition of $v_t(x)$ is
+    \begin{align*}
+      v_t(x) &= \int v_t(x|x_{\data}) \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{p_t(x)}\, \dee x_{\data}  \\
+      &= \int v_t(x|x_{\data}) \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{\int p_t(x|x_{\data}) p_{\data}(x_{\data})\, \dee x_{\data}}\, \dee x_{\data}.
+    \end{align*}
+    This involves two integrals, which hard to compute.
     </p>
-</div>
+
+    <hr>
+    <p>So, calculating the flow matching loss seems like a hassle.</p>
+
+    <hr>
+    <p>The flow matching paper suggests using the following <b>conditional flow matching loss</b> instead.
+    \begin{align*}
+      \mcal{L}_{\mrm{CFM}}(\theta) = E_{\substack{x_{\data} \sim p_{\data},\\t \sim \mcal{U}([0,1]), \\ x_t \sim p_t(\cdot|x_{\data}) }} \big[ \| v_t(x_t|x_{\data}) - v(t, x_t; \theta) \|^2 \big].
+    \end{align*}
+    </p>
+
+    <hr>
+    <p><b>Theorem.</b> The flow matching loss and the conditional flow matching loss have the same gradiant with respect to the neural network parameters $\theta$. In other words,
+    \begin{align*}
+      \nabla_{\theta} \mcal{L}_{\mrm{CFM}}(\theta) = \nabla_{\theta} \mcal{L}_{\mrm{CM}}(\theta).
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>So, if you optimizer your network with the conditional flow matching loss, you will get a vector field that also minimizes the flow matching loss. This means that the flow would generate a probability path from $\mcal{N}(0,I)$ to an approximation of $p_{\data}$.</p>
+
+    
+    <hr>
+    <p>
+        <a href="../_0063/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0065/index.html">[&gt;&gt;]</a> 
+    </p>
+  </div>
 
 <script type="text/javascript">
 $.bigfoot();

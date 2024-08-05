@@ -21,10 +21,14 @@ class TimeDependentVectorFieldTasksArgs:
                  num_frames: int,
                  vector_field_func: Callable[[float], Tuple[ndarray, ndarray, ndarray, ndarray]],
                  flow_func: Callable[[float, ndarray], ndarray],
+                 scale_func: Callable[[float], float],
+                 translate_func: Callable[[float], Tuple[float, float]],
                  points: ndarray,
                  axis_x_lim=(-3, 3),
                  axis_y_lim=(-3, 3),
                  scale=20.0):
+        self.translate_func = translate_func
+        self.scale_func = scale_func
         self.points = points
         self.flow_func = flow_func
         self.scale = scale
@@ -128,8 +132,9 @@ class TimeDependentVectorFieldTasksArgs:
         pyplot.title(f"t = {'%0.2f' % t}")
 
         image = get_hoshihina_image()
-        d = self.flow_func(t, numpy.array([[0.0,0.0]]))
-        xform = transforms.Affine2D().translate(d[0,0], d[0,1])
+        s = self.scale_func(t)
+        d_x, d_y = self.translate_func(t)
+        xform = transforms.Affine2D.from_values(s, 0, 0, s, d_x, d_y)
         image = axis.imshow(
             image,
             interpolation='antialiased',
@@ -222,6 +227,8 @@ def define_data_20240803_tdvf_tasks(workspace: Workspace):
         301,
         tdvf_00,
         flow_func_00,
+        scale_func=lambda t: 1.0,
+        translate_func=lambda t: (numpy.sin(t * 2 * numpy.pi * 10), 0),
         points=numpy.array([
             [0.0, 0.0],
             [2.0, 2.0],
@@ -229,6 +236,38 @@ def define_data_20240803_tdvf_tasks(workspace: Workspace):
             [-1.5, -2.5],
             [0.5, -1.0]
         ]))
+    args.define_tasks(workspace)
+    all_tasks.append(args.all_command_name())
+
+    def tdvf_01(t: float):
+        x = numpy.linspace(-5, 5, 23)
+        y = numpy.linspace(-5, 5, 23)
+        X, Y = numpy.meshgrid(x, y)
+        U = (- 1.8*t) / (1-0.9*t**2) * (X + 2*t**2) - 4*t
+        V = (- 1.8*t) / (1-0.9*t**2) * (Y - 1*t**2) + 2*t
+        return X, Y, U, V
+
+    def flow_func_01(t: float, x: ndarray):
+        y = (1 - 0.9*t**2) * x
+        y[:, 0] = y[:, 0] - 2*t**2
+        y[:, 1] = y[:, 1] + t**2
+        return y
+
+    args = TimeDependentVectorFieldTasksArgs(
+        f"{DATA_20240803_TDVF_PREFIX}/_01",
+        101,
+        tdvf_01,
+        flow_func_01,
+        scale_func=lambda t: 1.0-0.9*t**2,
+        translate_func=lambda t: (-2*t**2, t**2),
+        points=numpy.array([
+            [0.0, 0.0],
+            [2.0, 2.0],
+            [-1.0, 1.0],
+            [-1.5, -2.5],
+            [0.5, -1.0]
+        ]),
+        scale=300)
     args.define_tasks(workspace)
     all_tasks.append(args.all_command_name())
 

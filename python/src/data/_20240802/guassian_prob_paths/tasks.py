@@ -218,5 +218,21 @@ def define_data_20240802_gaussian_prob_paths_tasks(workspace: Workspace):
     args.define_tasks(workspace)
     all_tasks.append(args.all_task_name())
 
+    def sigma_03(t: numpy.ndarray):
+        return 1 - 0.9*t**2
+
+    def mu_03(t: numpy.ndarray):
+        x = -2*t**2
+        y = t**2
+        return x, y
+
+    args = GaussianProbabilityPathTasksArgs(
+        f"{DATA_20240802_GAUSSIAN_PROB_PATHS_PREFIX}/path_03",
+        101,
+        mu_func=mu_03,
+        sigma_func=sigma_03,
+        v_max=1.0 / (2.0 * numpy.pi))
+    args.define_tasks(workspace)
+    all_tasks.append(args.all_task_name())
 
     workspace.create_command_task(f"{DATA_20240802_GAUSSIAN_PROB_PATHS_PREFIX}/all", all_tasks)

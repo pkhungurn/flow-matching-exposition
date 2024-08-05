@@ -11,3 +11,7 @@ p, div {
     font-family: "Times New Roman", Times, serif;  
 }
 */
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+}

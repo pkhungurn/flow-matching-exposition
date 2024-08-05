@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0058</title>
+    <title>0063</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -83,87 +83,97 @@
         \)
     </span>
 
-    <h1>Instantaneous Change of Variable Formula</h1>
+    <h1>The General Case</h1>
+
+    <hr>
+    <p>For the special case, there's no need to even train a neural network because we know the vector field in closed form.</p>
+
+    <hr>
+    <p>So, how do we deal with the general case where $p_{\data}$ is much more complicated than a distribution that contains a single element?</p>
     
     <hr>
-    <p>Another tool to have in the belt is how to compute probability $p_t(\phi_t(x))$ when you only have the vector field $v_t$ and not the exact form of $\phi_t$.</p>
-
-    <hr>
-    <p><b>Theorem (Instanteneous change of variable formula)</b>. Let $v_t$ be a vector field that generates a probability path $p_t$. Then,
+    <p>Well, we can use the law of total proability to decompose $p_{\data}$ into a mixture of distributions that contain single elements.
     \begin{align*}
-      \frac{\partial}{\partial t} \big(\log p_t(\phi_t(x))\big) 
-      = -\mrm{tr}(\nabla_{\S 2}v_t(\phi_t(x))) 
-      = - \sum_{i=1}^d \nabla_{i+1} v_t^{i}(\phi_t(x)).
+      p_{\data}(x) = \int p_{\data}(x_{\data}) p_{\data}(x|x_{\data})\, \dee x_{\data}.
     \end{align*}
-    To make it especially clear,
+    where
     \begin{align*}
-    \nabla_1 (\log \circ p)(t,\phi_t(x))
-      = -\mrm{tr}\Big((\nabla_{\S 2} v )(t,\phi_t(x))\Big) 
-      = - \sum_{i=1}^d \nabla_{i+1} v^{i}(t,\phi_t(x)).
-    \end{align*}
-    </p>
-
-    <p>This first appear in the neural ODE paper <a href="https://arxiv.org/abs/1806.07366">[Chen et al. 2018]</a>. </p>
-
-    <hr>
-    <p>Let's say we want to compute $\log p_t(\phi_t(x))$. The instantaneous rate of change formula allows us to write
-    \begin{align*}
-      \log p_t(\phi_t(x)) &= (\log \circ p)(0, \phi_0(x)) + \int_0^t \nabla_1 (\log \circ p)(u, \phi_u(x))\, \dee u \\
-      &= \log p_0(x) - \int_0^t \bigg( \sum_{i=1}^d \nabla_{i+1} v^{i}(u,\phi_u(x)) \bigg)\, \dee u.
+      p(x|x_{\data}) = \delta(x - x_{\data}).
     \end{align*}
     </p>
 
     <hr>
-    <p>With this, we can integrate the log probability the same time we integrate the vector field.</p>
-
-<pre><code class="language-python">def euler(v, t, x, p_0, K=50):
-  du = t / K
-  log_p = math.log(p_0(x))
-  for k in range(K):
-    log_p = log_p - du * jacobian_trace(v, u, x)
-    x = x + du * v(t, x)
-    u = u + du
-  return x, log_p
-</code></pre>
-
-    <p>Here, the function <code>jacobian_trace</code> computes $\mrm{tr}(\nabla_{\S 2}v_t(\phi_t(x)))$.</p>
-
-    <hr>
-    <p>How do you compute the Jacobian trace though? Direct computation is not desirable because we don't want to compute the Jacobian and then use just only $n$ entries of it.</p>
-
-    <hr>
-    <p>The FFJORD paper <a href="https://arxiv.org/pdf/1810.01367">[Grathworl et al. 2019]</a> suggest using the Hutchinson's trace estimator <a href="https://www.researchgate.net/publication/245083270_A_stochastic_estimator_of_the_trace_of_the_influence_matrix_for_Laplacian_smoothing_splines">[1990]</a>.</p>
-
-    <p><b>Theorem (Hutchinson's).</b> Let $A \in \Real^{d \times d}$ be a real matrix. 
+    <p>We want $p_1$ to be $p_{\data}$, but that might be too hard. Let's do the same thing we do in the last slide. Let us say that, given that we have picked $x_{\data}$, our target distribution is
     \begin{align*}
-      \tr(A) = E_{\epsilon} [\epsilon^T A \epsilon]
+      p_{1}(x|x_{\data}) = \mcal{N}(x; x_{\data}, \sigma_{\min}^2 I).
     \end{align*}
-    where $\epsilon \in \Real^d$ is a vector sampled from a distribution where each component of the vector (1) is independent from any ohter component, (2) has mean 0, and (3) has variance 1.
+    So,
+    \begin{align*}
+      p_1(x) &= \int p_{\data}(x_{\data}) p_1(x|x_{\data})\, \dee x_{\data} 
+      = \int p_{\data}(x_{\data}) \mcal{N}(x_{\data}, \sigma_{\min}^2 I)\, \dee x_{\data}.
+    \end{align*}
+    In other words,
+    $$p_1 = \mcal{N}(0,\sigma_2^2I) * p_{\data}$$
+    where $*$ is denotes convolution.
     </p>
+
+    <hr>
+    <p>In the last slide, we know a probability path that transforms $\mcal{N}(0,1)$ to $\mcal{N}(x_{\data}, \sigma_{\min}^2 I)$. This probability path is completely determined if we have picked one $x_{\data}$. So, let us denote it by $$p_t(x|x_{\data}).$$</p>
+
+    <hr>
+    <p>It follows immediately from the law of total probability that
+    \begin{align*}
+      p_t(x) = \int p_{\data}(x_{\data}) p_t(x|x_{\data})\, \dee x_{\data}.
+    \end{align*}
+    In other words, we can construct a probability path from $\mcal{N}(0,I)$ to an approximation of $p_{\data}$ by integrating the probability paths for the special cases where $p_{\data}$ has only one element.
+    </p>
+
+    <hr>
+    <p>While we can construct $p_t$, we don't know the vector field that generates this probability path, so we cannot do flow matching yet.</p>
+
+    <hr>
+    <p>In the last slide, we know that the vector field $v_t(x|x_{\data})$ that generates the probability path $p_t(x|x_{\data})$. This probability path is given by:
+    \begin{align*}
+    v_t(x|x_{\data}) = \frac{\sigma_t'(x_{\data})}{\sigma_t(x_{\data})} (x - \mu_t(x_{\data})) + \mu'_t(x_{\data}).
+    \end{align*}
+    Note that $\mu_t$ and $\sigma_t$ becomes $\mu_t(x_{\data})$ and $\sigma_t(x_{\data})$ because we want to emphasize the dependence of $\mu_t$ and $\sigma_t$ on $x_{\data}$.
+    </p>
+
+    <hr>
+    <p>It turns out the following flow works.</p>
+
+    <p><b>Theorem</b>. The vector field
+    \begin{align*}
+      v_t(x) = \int v_t(x|x_{\data}) \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{p_t(x)}\, \dee x_{\data}
+    \end{align*}
+    generates the probability path
+    \begin{align*}
+      p_t(x) = \int p_{\data}(x_{\data}) p_t(x|x_{\data})\, \dee x_{\data}.
+    \end{align*}
+    </p>
+
+    <p>This can be proven using the theorem on continuity equation.</p>
+
+    <hr>
+    <p>Have you seen
+    \begin{align*}
+      \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{p_t(x)}
+    \end{align*}
+    somewhere before?
+    </p>
+
+    <p>This is very similar to the RHS of Bayes' rule.
+    \begin{align*}
+      \Pr(B|A) = \frac{\Pr(A|B)\Pr(B)}{\Pr(A)}
+    \end{align*}
+    </p>
+
     
-    <p>In fact, we can use $\epsilon \sim \mcal{N}(0,I)$.</p>
-
-    <hr>
-    <p>If we use Hutchinson's trace estimator, then how to we compute $\epsilon^T \nabla_{\S 2}v_t(\phi_t(x)) \epsilon$?</p>
-
-    <hr>
-    <p>In ML software package, we have the ability do to forward-mode automatic differentiation. This means that, for a differentiable function $f: \Real^d \ra \Real^d$, computing $$y^T \nabla_x f(x) $$ for any $y \in \Real^d$ is a feature of the library.</p>
-
-    <hr>
-    <p>In PyTorch, the function that does this is <code>torch.autograd.grad</code>. In particlar, we can write <code>jacobian_trace</code> as follows.
-
-<pre><code class="language-python">def jacobian_trace(v, t, x):
-  e = torch.randn_like(x)
-  v_out = v(t, x)
-  eT_Dv = torch.autograd.grad(v_out, x, grad_outputs=e, retain_graph=True)
-  return (eT_Dv * e).sum(dim=1)
-</code></pre>
-      
     <hr>
     <p>
-        <a href="../_0057/index.html">[&lt;&lt;]</a> 
+        <a href="../_0062/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0059/index.html">[&gt;&gt;]</a> 
+        <a href="../_0064/index.html">[&gt;&gt;]</a> 
     </p>
   </div>
 

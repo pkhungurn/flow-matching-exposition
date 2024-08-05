@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0056</title>
+    <title>0059</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -83,58 +83,48 @@
         \)
     </span>
 
-    <h1>Push-Forward by a Vector Field</h1>
+    <h1>Computing Log-Likelihood</h1>
     
     <hr>
-    <p><b>Definition.</b> Let $v_t$ be a differentiable vector field such that it generates a flow $\phi_t$. Let $p_t$ be a probability path. We say that <b>$v_t$ generates $p_t$</b> if $p_t$ is a result of a push-foward of $p_0$ by $\phi_t$. In other words,
-    \begin{align*}
-      p_t = [\phi_t]_* p_0.
-    \end{align*}
-    </p>
+    <p>Suppose we have a vector field $v_t$ that that generates a probability path $p_t$ by pushing forward a probability distribution $p_0$</p>
 
     <hr>
-    <p>Basically, if we have a time-dependent vector field, we can generate a probability path as follows.</p>
+    <p>Suppose we are given a data point $x' \sim p_1$. Can we compute $p_1(x')$?</p>
 
-    <table>
-      <tr>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frame_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240802/gaussian_prob_paths/path_02/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>        
-      </tr>
-      <tr>
-        <td align="center">time-dependent vector field $v_t$</td>
-        <td></td>
-        <td align="center">flow $\phi_t$</td>
-        <td></td>
-        <td align="center">probability path $p_t = [\phi_t]_* p_0$</td>
-      </tr>
-    </table>
+    <hr>
+    <p>Remember that
+    $$p_1(x') = \frac{p_0(\phi_1^{-1}(x'))}{|\det \nabla_{\S 2} \phi_1(\phi_1^{-1}(x')) |}$$
+    </p>
+    
+    <hr>
+    <p>We can estimate $\phi^{-1}_1(x')$ backward by doing simulation backward in time from $1$ to $0$. Then, we can use the algorithm in the last slide to compute $p_1(\phi_1(\phi_1^{-1}(x))) = p_1(x').$</p>
 
+    <hr>
+    <p>However, that computation is wasteful because we run the simulation two times.</p>
+
+    <hr>
+    <p>Instead, we can just integrate $\log p_1(x')$ when we simulate.</p>
+
+<pre><code class="language-python">def compute_p_1(v, x, p_0, K=50):
+  du = 1.0 / K
+  log_p = 0.0
+  u = 1.0
+  for k in range(K):
+    log_p = log_p - du * jacobian_trace(v, u, x)
+    x = x - du * v(t, x)
+    u = u - du
+  log += math.log(p_0(x)) 
+  return log_p
+</code></pre>
+    
+      
     <hr>
     <p>
-        <a href="../_0055/index.html">[&lt;&lt;]</a> 
+        <a href="../_0058/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0057/index.html">[&gt;&gt;]</a> 
+        <a href="../_0060/index.html">[&gt;&gt;]</a> 
     </p>
-</div>
+  </div>
 
 <script type="text/javascript">
 $.bigfoot();

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0056</title>
+    <title>0060</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -83,58 +83,64 @@
         \)
     </span>
 
-    <h1>Push-Forward by a Vector Field</h1>
+    <h1>Continuous Normalizing Flow</h1>
     
     <hr>
-    <p><b>Definition.</b> Let $v_t$ be a differentiable vector field such that it generates a flow $\phi_t$. Let $p_t$ be a probability path. We say that <b>$v_t$ generates $p_t$</b> if $p_t$ is a result of a push-foward of $p_0$ by $\phi_t$. In other words,
-    \begin{align*}
-      p_t = [\phi_t]_* p_0.
-    \end{align*}
-    </p>
+    <p>Let's get back to generative modeling problem.</p>
+
+    <ul>
+      <li>We are given $p_{\mrm{noise}}$.</li>
+      <li>We are given $N$ from $p_{\data}$, but we do not know what $p_{\data}$ looks like.</li>
+      <li>We want to find a probability path $p_t$ such that $p_0 = p_{\mrm{noise}}$ and $p_1 = p_{\data}$.</li>
+    </ul>
 
     <hr>
-    <p>Basically, if we have a time-dependent vector field, we can generate a probability path as follows.</p>
+    <p>The neural ODE paper <a href="https://arxiv.org/abs/1806.07366">[Chen et al. 2018]</a> proposes doing the following.</p>
+    <ul>
+      <li>Use a neural network $v(t,x;\theta)$ to model a time-dependent vector field $v_t(x)$.</li>
+      <li>The neural network would give rise to a flow. We can use this flow to push forward $p_{\mrm{noise}}$, and this will give us some probability distribution $p_1$.</li>
+      <li>We optimize $p_1$ to approximate $p_{\data}$ by minimizing the negative log likelihodd of the data items from the distribution. In other words, we minimize
+      \begin{align*}
+        \mcal{L}_{\mrm{NLL}}(\theta) = E_{x_{\data} \sim p_{\data}} \bigg[ -\log p_1(x_{\data}) \bigg].
+      \end{align*}
+      </li>
+      <li>We can compute $\log p_1(x_{\data})$ with the algorithm we discussed in the last slide.</li>
+    </ul>    
 
-    <table>
-      <tr>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frame_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240802/gaussian_prob_paths/path_02/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>        
-      </tr>
-      <tr>
-        <td align="center">time-dependent vector field $v_t$</td>
-        <td></td>
-        <td align="center">flow $\phi_t$</td>
-        <td></td>
-        <td align="center">probability path $p_t = [\phi_t]_* p_0$</td>
-      </tr>
-    </table>
+    <hr>
+    <p>The neural network model above is called a <b>continuous normalizing flow</b> (CNF).</p>
+
+    <hr>
+    <p>Why is CNF good?</p>
+
+    <ul>
+      <li>Unlike discrete normalizing flow, there is no restriction on the form of the network $v(t,x;\theta)$.</li>
+    </ul>
+
+    <hr>
+    <p>Why is CNF bad?</p>
+
+    <ul>
+      <li>Each training example is expensive. We must simulate the dynamics of the vector field in each training iteration.</li>
+      <li>Sampling is also expensive because we need to integrate the vector field.
+        <ul>
+          <li>This is also one of cons of diffusion models.</li>
+        </ul>
+      </li>
+    </ul>
+      
+    <hr>
+    <p>When we train diffusion models, we do not have to integrate anything. Each training iteration is much cheaper.</p>
+
+    <p>Can we train a CNF as cheaply as we train a diffusion model?</p>
 
     <hr>
     <p>
-        <a href="../_0055/index.html">[&lt;&lt;]</a> 
+        <a href="../_0059/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0057/index.html">[&gt;&gt;]</a> 
+        <a href="../_0061/index.html">[&gt;&gt;]</a> 
     </p>
-</div>
+  </div>
 
 <script type="text/javascript">
 $.bigfoot();

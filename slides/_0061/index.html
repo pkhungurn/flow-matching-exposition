@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0056</title>
+    <title>0061</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -83,58 +83,37 @@
         \)
     </span>
 
-    <h1>Push-Forward by a Vector Field</h1>
+    <h1>Flow Matching</h1>
     
     <hr>
-    <p><b>Definition.</b> Let $v_t$ be a differentiable vector field such that it generates a flow $\phi_t$. Let $p_t$ be a probability path. We say that <b>$v_t$ generates $p_t$</b> if $p_t$ is a result of a push-foward of $p_0$ by $\phi_t$. In other words,
+    <p>The flow matching paper <a href="https://arxiv.org/abs/2210.02747">[Lipman et al. 2022]</a> proposes a way to train CNF without simulation.</p>
+
+    <hr>
+    <p>If we know the correct time-dependent vector field $v_t(x)$ is before hand, we can train a neural network $v(t,x;\theta)$ to approximates the correct vector field by minimizing the following <b>flow matching loss</b>:
     \begin{align*}
-      p_t = [\phi_t]_* p_0.
+      \mcal{L}_{\mrm{FM}}(\theta) = E_{\substack{t \sim \mcal{U}([0,1]), \\ x \sim p_t }} \big[ \| v_t(x) - v(t, x; \theta) \|^2 \big].
     \end{align*}
+    After training finishes, we can use $v(t,x;\theta)$ as a drop-in replacement for $v_t(x)$.
     </p>
 
     <hr>
-    <p>Basically, if we have a time-dependent vector field, we can generate a probability path as follows.</p>
+    <p>The problem is that we don't know what $v$ is.</p>
 
-    <table>
-      <tr>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frame_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240803/tdvf/_00/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>
-        <td>
-          $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
-        </td>
-        <td>
-          <video width="300" height="300" controls muted autoplay loop>
-            <source src="../../data/_20240802/gaussian_prob_paths/path_02/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
-          </video>
-        </td>        
-      </tr>
-      <tr>
-        <td align="center">time-dependent vector field $v_t$</td>
-        <td></td>
-        <td align="center">flow $\phi_t$</td>
-        <td></td>
-        <td align="center">probability path $p_t = [\phi_t]_* p_0$</td>
-      </tr>
-    </table>
+    <hr>
+    <p>The paper does two things.
+    <ul>
+      <li>It suggests a way to construct $v$ from individual samples of $p_{\data}$.</li>
+      <li>It introduces another loss, the <b>conditional flow matching loss</b>, that is simpler to evaluate than the flow matching loss, but has the exact same gradient. So, we can use the conditional flow matching loss during training, and we will get the same vector field (theoretically).</li>
+    </ul>
+    </p>
 
     <hr>
     <p>
-        <a href="../_0055/index.html">[&lt;&lt;]</a> 
+        <a href="../_0060/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0057/index.html">[&gt;&gt;]</a> 
+        <a href="../_0062/index.html">[&gt;&gt;]</a> 
     </p>
-</div>
+  </div>
 
 <script type="text/javascript">
 $.bigfoot();

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>0062</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: {autoNumber: "AMS"} }
+    });
+    </script>
+    <script type="text/javascript"
+            src="../../MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<div class="container">
+    <span style="visibility: hidden;">
+        \(
+        \def\sc#1{\dosc#1\csod}
+        \def\dosc#1#2\csod{{\rm #1{\small #2}}}
+
+        \newcommand{\dee}{\mathrm{d}}
+        \newcommand{\Dee}{\mathrm{D}}
+        \newcommand{\In}{\mathrm{in}}
+        \newcommand{\Out}{\mathrm{out}}
+        \newcommand{\pdf}{\mathrm{pdf}}
+        \newcommand{\Cov}{\mathrm{Cov}}
+        \newcommand{\Var}{\mathrm{Var}}
+
+        \newcommand{\ve}[1]{\mathbf{#1}}
+        \newcommand{\ves}[1]{\boldsymbol{#1}}
+        \newcommand{\mrm}[1]{\mathrm{#1}}
+        \newcommand{\etal}{{et~al.}}
+        \newcommand{\sphere}{\mathbb{S}^2}
+        \newcommand{\modeint}{\mathcal{M}}
+        \newcommand{\azimint}{\mathcal{N}}
+        \newcommand{\ra}{\rightarrow}
+        \newcommand{\mcal}[1]{\mathcal{#1}}
+        \newcommand{\X}{\mathcal{X}}
+        \newcommand{\Y}{\mathcal{Y}}
+        \newcommand{\Z}{\mathcal{Z}}
+        \newcommand{\x}{\mathbf{x}}
+        \newcommand{\y}{\mathbf{y}}
+        \newcommand{\z}{\mathbf{z}}
+        \newcommand{\tr}{\mathrm{tr}}
+        \newcommand{\sgn}{\mathrm{sgn}}
+        \newcommand{\diag}{\mathrm{diag}}
+        \newcommand{\Real}{\mathbb{R}}
+        \newcommand{\sseq}{\subseteq}
+        \newcommand{\ov}[1]{\overline{#1}}
+        \DeclareMathOperator*{\argmax}{arg\,max}
+        \DeclareMathOperator*{\argmin}{arg\,min}
+
+        \newcommand{\data}{\mathrm{data}}
+        \newcommand{\N}{\mathcal{N}}
+        \newcommand{\Hil}{\mathcal{H}}
+        \)
+    </span>
+
+    <h1>Flow Matching for Gaussian Distributions</h1>
+    
+    <hr>
+    <p>Generative modeling is complicated because $p_{\data}$ can be quite complicated.</p>
+
+    <hr>
+    <p>When solving a problem, it is often fruitful to start by solving a special case of the problem. We may gain valuable insights that would be helpful in solving the full problem.</p>
+
+    <hr>
+    <p>Let's focus on the case where $p_{\data}$ is a very simple probability distribution. One that contains a single data item $x_{\data}$. In this case, we have that
+    $$p_{\data}(x) = \delta(x - x_{\data})$$
+    where $\delta$ is the Dirac delta function.
+    </p>    
+
+    <hr>
+    <p>Let's say $p_{\mrm{noise}}$ is the standard normal distribution $\mcal{N}(0,I)$.</p>
+
+    <hr>
+    <p><b>Question.</b> Is there a way to continously transform a Gaussian distribution to a delta distribution?</p>
+
+    <p><b>Answer.</b> No. No continuous transformation can achieve this.</p>
+
+    <hr>
+    <p>OK. So let's settle with an approximation of the delta distribuiton. We approximate the delta distribution with a Gaussian whose mean is $x_{\data}$ and whose standard deviation is a small number $\sigma_{\min}$.
+    \begin{align*}
+      p_{\data} = \mcal{N}(x_{\data}, \sigma_{\min}^2 I).
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>We want a probability path that goes from $p_{\mrm{noise}} = \mcal{N}(0,I)$ to $p_{\data} = \mcal{N}(x_{\data}, \sigma_{\min}^2 I).$</p>
+
+    <hr>
+    <p>Is there one? Yes. There are many! We have shown that the probability path
+    \begin{align*}
+      \mcal{N}(\mu_t, \sigma_t^2 I)
+    \end{align*}
+    where $\mu_t$ and $\sigma_t$ are differentiable functions where $\mu_0 = 0$, $\mu_1 = x_{\data}$, $\sigma_0 = 1$ and $\sigma_1 = \sigma_{\min}$ would do the job.
+    </p>
+
+    <hr>
+    <p>This path is generated by the flow
+    \begin{align*}
+      \phi_t(x) = \frac{\sigma_t}{\sigma_0}(x - \mu_0) + \mu_t = \sigma_t x + \mu_t.
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>Is there a vector field generates this flow?</p>
+    
+    <p>If there is one, the vector field would have to satisfy the equation
+    \begin{align*}
+      \frac{\partial}{\partial t} \phi_t(x) &= v_t(\phi_t(x)) \\
+      \frac{\partial}{\partial t} (\sigma_t x + \mu_t) &= v_t(\sigma_t x + \mu_t) \\
+      \sigma_t' x + \mu_t' &= v_t(\sigma x + \mu_t).
+    \end{align*}
+    Substitute $x$ with $(x - \mu_t) / \sigma_t$, we have
+    \begin{align*}
+      v_t(x) = \sigma_t' \frac{x - \mu_t}{\sigma_t} + \mu_t' = \frac{\sigma_t'}{\sigma_t} (x - \mu_t) + \mu_t'
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>Let's visualize an example.</p>
+
+    <p>Suppose $x_{\data} = (-2,1)$ and $\sigma_{\min} = 0.1$. Let 
+    \begin{align*} 
+    \mu_t &= (-2,1) t^2 \\
+    \sigma_t &= 1 - 0.9 t^2.
+    \end{align*}
+    Then, we have that the flow is
+    \begin{align*}
+      \phi_t(x) = (1 - 0.9t^2) x + (-2,1)t^2,
+    \end{align*}
+    and the vector field is
+    \begin{align*}
+      v_t(x) = \frac{-1.8t}{1 - 0.9t^2} (x - (-2,1)t^2) + (-4,2)t
+    \end{align*}
+    </p>
+
+    <p>Here's what the vector field looks like.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+      <source src="../../data/_20240803/tdvf/_01/frame_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>If you put points on the vector field and simulate the points' movement, you get this.</p>
+
+    <center>
+      <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_01/frames_with_points_video/video_for_web.mp4" type="video/mp4">
+    </video>
+    </center>
+
+    <p>The resulting flow of the simulation is this.</p>
+
+    <center>
+      <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_01/frames_with_image_video/video_for_web.mp4" type="video/mp4">
+    </video>
+    </center>
+
+    <p>Lastly, if you use the flow to push forward $\mcal{N}(0,1)$, you get this.</p>
+
+    <center>
+      <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240802/gaussian_prob_paths/path_03/gaussian_viz_video/video_for_web.mp4" type="video/mp4">
+    </video>
+    </center>
+
+    <p>In summary,</p>
+    
+    <table>
+      <tr>
+        <td>
+          <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240803/tdvf/_01/frame_video/video_for_web.mp4" type="video/mp4">      
+          </video>
+        </td>
+        <td>
+          $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
+        </td>
+        <td>
+          <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240803/tdvf/_01/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
+          </video>
+        </td>
+        <td>
+          $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
+        </td>
+        <td>
+          <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240802/gaussian_prob_paths/path_03/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
+          </video>
+        </td>        
+      </tr>      
+    </table>
+
+    <hr>
+    <p>
+        <a href="../_0061/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0063/index.html">[&gt;&gt;]</a> 
+    </p>
+  </div>
+
+<script type="text/javascript">
+$.bigfoot();
+</script>
+
+</body>
+</html>
