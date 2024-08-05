@@ -80,10 +80,10 @@
         \)
     </span>
 
-    <h1>An Example Flow</h1>
+    <h1>Examples of Flows.</h1>
 
     <hr>
-    <p>The function $$\phi_t(x) = x + (t,0)$$ is a flow.</p>
+    <p><b>Example 1.</b> The function $$\phi_t(x) = x + (t,0)$$ is a flow.</p>
 
     <ul>
       <li>$\phi_0(x) = x + (0,0) = x$.</li>
@@ -106,10 +106,28 @@
     </ul>
 
     <hr>
+    <p><b>Example 2.</b> The function $$\phi_t(x) = \begin{bmatrix} \cos t & -\sin t \\ \sin t & \cos t \end{bmatrix} x$$  is a flow.</p>
+
+    <ul>
+      <li>$\phi_0(x) = Ix = x$.</li>
+      <li>The derivative is given by
+        \begin{align*}
+          \nabla \phi_t(x) &= \begin{bmatrix} \nabla_1 \phi_t(x) & \nabla_{\S 2} \phi_t(x) \end{bmatrix} \\
+          \nabla_1 \phi_t(x) &= \frac{\partial}{\partial t} \bigg( \begin{bmatrix}  \cos t & -\sin t \\ \sin t & \cos t \end{bmatrix} x \bigg)
+          = \begin{bmatrix} -\sin t & -\cos t \\ \cos t & -\sin t \end{bmatrix} x \\
+          \nabla_{\S 2} \phi_t(x) &= \frac{\partial}{\partial x} \bigg( \begin{bmatrix}  \cos t & -\sin t \\ \sin t & \cos t \end{bmatrix} x \bigg) = \begin{bmatrix} \cos t & -\sin t \\ \sin t & \cos t \end{bmatrix}.
+        \end{align*}
+        All entries are continuous funtions of $t$ and $x$. So, $\phi$ is differentiable.
+      </li>
+      <li>$\phi_t$ as a function of signature $\Real^d \ra \Real^d$ is just a rotation of $x$ around the origin by $t$ radians. So it is a diffeomorphism.</li>
+    </ul>
+
+
+    <hr>
     <p>
         <a href="../_0046/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0048/index.html">[&gt;&gt;]</a> 
+        <a href="../_0049/index.html">[&gt;&gt;]</a> 
     </p>
 </div>
 

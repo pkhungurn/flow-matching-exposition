@@ -81,19 +81,85 @@
     </span>
 
     <br>
-    <h1>Derivative of a Translation</h1>
+    <h1>Derivatives of Simple Functions</h1>
 
     <hr>
-    <p>Let's compute the derivative of functions we have been playing with so far.</p>
+    <p>Let's compute derivatives of functions we have bee seen so far.</p>
     
+    <hr>    
+    <h2>Translation</h2>
+
+    <p>Derivative of the translation function $\texttt{T}_{\mu}(x)$ is the identity matrix.
+    \begin{align*}
+    \nabla \texttt{T}_{\mu}(x) = 
+    \begin{bmatrix} 
+    1 & 0 & \cdots & 0 \\ 
+    0 & 1 & \cdots & 0 \\ 
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & 1 
+    \end{bmatrix} 
+    = I.
+    \end{align*}
+    </p>
+
+    <p>
+    For the 2D case, we have that
+    \begin{align*}
+    \texttt{T}_{\mu}(x) = \begin{bmatrix} x^1 + \mu^1 \\ x^2 + \mu^2 \end{bmatrix}.
+    \end{align*}
+    So,
+    \begin{align*}
+    \nabla T_{\mu}(x) = \begin{bmatrix}
+    \frac{\partial (x^1 + \mu^1)}{\partial x^1} & \frac{\partial (x^1 + \mu^1)}{\partial x^2} \\
+    \frac{\partial (x^2 + \mu^2)}{\partial x^1} & \frac{\partial (x^2 + \mu^2)}{\partial x^2}
+    \end{bmatrix}
+    = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}.
+    \end{align*}
+    </p>
+
     <hr>
-    <p>What's the derivative of a translation? $$ \nabla \texttt{T}_{\mu}(x) = ? $$</p>    
+    <h2>Uniform Scaling</h2>
+    
+    <p>The derivative of a uniform scaling $\texttt{S}_{\sigma}$ is the identity matrix multiplied by a scalar. 
+    \begin{align*}
+    \nabla \texttt{S}_{\sigma}(x) = 
+    \begin{bmatrix} 
+    \sigma & 0 & \cdots & 0 \\ 
+    0 & \sigma & \cdots & 0 \\ 
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & \sigma 
+    \end{bmatrix} 
+    = \sigma I.
+    \end{align*}
+    </p>
+
+    <p>
+    For the 2D case, we have that
+    \begin{align*}
+    \texttt{S}_{\sigma}(x) = \begin{bmatrix} \sigma x^1 \\ \sigma x^2 \end{bmatrix}.
+    \end{align*}
+    So,
+    \begin{align*}
+    \nabla S_{\sigma}(x) = \begin{bmatrix}
+    \frac{\partial (\sigma x^1)}{\partial x^1} & \frac{\partial (\sigma x^1)}{\partial x^2} \\
+    \frac{\partial (\sigma x^2)}{\partial x^1} & \frac{\partial (\sigma x^2)}{\partial x^2}
+    \end{bmatrix}
+    = \begin{bmatrix} \sigma & 0 \\ 0 & \sigma \end{bmatrix} = \sigma I.
+    \end{align*}
+    </p>
+
+    <hr>
+    <h2>Scale-Add</h2>
+
+    <p>The derivative of the scale-add is the same as the derivative of the uniform scaling part of it. $$ \nabla(\texttt{T}_\mu \circ \texttt{S}_\sigma)(x) = \nabla(\sigma\, \mrm{id} + \mu)(x) = \sigma I. $$</p>
+
+    <p>Derivation is left as an exercise for the reader.</p>
 
     <hr>
     <p>
         <a href="../_0018/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0020/index.html">[&gt;&gt;]</a> 
+        <a href="../_0025/index.html">[&gt;&gt;]</a> 
     </p>    
 </div>
 

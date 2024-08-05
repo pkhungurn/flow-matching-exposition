@@ -92,13 +92,30 @@
     </p>
 
     <hr>
-    <p><b>Quiz.</b> If $f$ is a vector function of signature $\Real^n \rightarrow \Real^m$, the derivative of $f$ is another function. What is its signature?</p>
+    <p>This can be written in a different way.</p>
+    
+    <p><b>Definition.</b> Let $f: \Real \ra \Real$ be scalar function. The <b>derivative of $f$ at $x$</b> is the real number $a \in \Real$ such that $$\lim_{h \rightarrow 0} \frac{|f(x+h) - (f(x) + ah)|}{|h|} = 0.$$ A function that sends $x$ to the derivative of $f$ at $x$ is called the <b>derivative of $f$</b> and is denoted by $f'$.</p>
+
+    <hr>
+    <p>Derivative of a vector function can be defined in a similarly.</p>
+
+    <p><b>Definition.</b> Let $f: \Real^n \ra \Real^m$ be vector function. The <b>derivative of $f$ at $x$</b> is the $m \times n$ matrix $A$ such that $$\lim_{h \rightarrow 0} \frac{\|f(x+h) - (f(x) + Ah)\|}{\|h\|} = 0.$$ A function that sends $x$ to the derivative of $f$ at $x$ is called the <b>derivative of $f$</b>.</p>
+
+    <hr>
+    <p>In other words, near $x$, the value of $f$ can be approximated well by $f(x+h) \approx f(x) + Ah$.</p>
+
+    <hr>
+    <p>If $f$ sends an $n$-dim vector to an $m$-dim vector,<br> then the derivative of $f$ sends $n$-dim vector to a matrix of shape $m \times n$.</p>
+
+
+    <hr>
+    <p>Some times, the derivative of $f$ at $x$ is called the <b>Jacobian matrix</b> of $f$ at $x$.</p>
 
     <hr>
     <p>
         <a href="../_0015/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0017/index.html">[&gt;&gt;]</a> 
+        <a href="../_0018/index.html">[&gt;&gt;]</a> 
     </p>    
 </div>
 

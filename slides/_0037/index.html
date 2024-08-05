@@ -86,13 +86,42 @@
     <hr>
     <p>If you want to transform one Gaussian $\mcal{N}(\mu_0, \sigma_0^2 I)$ to another Gaussian $\mcal{N}(\mu_1, \sigma_1^2 I )$, what function do you use as in a push-forward? $$ \mcal{N}(\mu_1, \sigma_1^2 I ) = [???]_* \mcal{N}(\mu_0, \sigma_0^2 I ) $$</p>
 
+    <hr>
+    <p>The answer is $$ \mcal{N}(\mu_1, \sigma_1^2 I ) = [\texttt{T}_{\mu_1} \circ \texttt{S}_{\sigma_1} \circ \texttt{S}_{1/\sigma_0} \circ \texttt{T}_{-\mu_0}]_* \mcal{N}(\mu_0, \sigma_0^2 I ).$$</p>
     
+    <hr>
+    <p>Why?
+
+    \begin{align*}
+    \mcal{N}(\mu_0, \sigma_0^2 I) 
+    \xrightarrow{\ \ \ \mcal{T}_{-\mu_0}\ \ \ }
+    \mcal{N}(0, \sigma_0^2 I)
+    \xrightarrow{\ \ \ \mcal{S}_{1/\sigma_0}\ \ \ }
+    \mcal{N}(0, I)
+    \xrightarrow{\ \ \ \mcal{S}_{\sigma_1}\ \ \ }
+    \mcal{N}(0, \sigma_1^2 I)
+    \xrightarrow{\ \ \ \mcal{T}_{\mu_1}\ \ \ }
+    \mcal{N}(\mu_1, \sigma_1^2 I) 
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>What does this function look like?
+    \begin{align*}
+    (\texttt{T}_{\mu_1} \circ \texttt{S}_{\sigma_1} \circ \texttt{S}_{1/\sigma_0} \circ \texttt{T}_{-\mu_0})(x)
+    &= (\texttt{T}_{\mu_1} \circ \texttt{S}_{\sigma_1} \circ \texttt{S}_{1/\sigma_0})(x-\mu_0) \\
+    &= (\texttt{T}_{\mu_1} \circ \texttt{S}_{\sigma_1})\bigg(\frac{1}{\sigma_0}(x-\mu_0)\bigg) \\
+    &= \texttt{T}_{\mu_1}\bigg(\frac{\sigma_1}{\sigma_0}(x-\mu_0)\bigg) \\
+    &= \frac{\sigma_1}{\sigma_0}(x-\mu_0) + \mu_1 \\    
+    &= \bigg( \frac{\sigma_1}{\sigma_0}(\mrm{id} - \mu_0) + \mu_1  \bigg) x.
+    \end{align*}
+    </p>    
     
     <hr>
     <p>
         <a href="../_0036/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0038/index.html">[&gt;&gt;]</a> 
+        <a href="../_0039/index.html">[&gt;&gt;]</a> 
     </p>
 </div>
 
