@@ -109,14 +109,21 @@
     </p>
 
     <hr>
-    <p>We want a probability path that goes from $p_{\mrm{noise}} = \mcal{N}(0,I)$ to $p_{\data} = \mcal{N}(x_{\data}, \sigma_{\min}^2 I).$</p>
+    <p>We want a probability path that goes from $p_0 = p_{\mrm{noise}} = \mcal{N}(0,I)$ to $p_1 = p_{\data} = \mcal{N}(x_{\data}, \sigma_{\min}^2 I).$</p>
 
     <hr>
     <p>Is there one? Yes. There are many! We have shown that the probability path
     \begin{align*}
       \mcal{N}(\mu_t, \sigma_t^2 I)
     \end{align*}
-    where $\mu_t$ and $\sigma_t$ are differentiable functions where $\mu_0 = 0$, $\mu_1 = x_{\data}$, $\sigma_0 = 1$ and $\sigma_1 = \sigma_{\min}$ would do the job.
+    where $\mu_t$ and $\sigma_t$ are differentiable functions where
+    \begin{align*}
+    \mu_0 &= 0,  \\
+    \mu_1 &= x_{\data}, \\
+    \sigma_0 &= 1, \\
+    \sigma_1 &= \sigma_{\min}
+    \end{align*}
+    would do the job.
     </p>
 
     <hr>

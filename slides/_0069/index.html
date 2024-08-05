@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0065</title>
+    <title>0069</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -32,11 +32,7 @@
     <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">    
 </head>
 <body>
 <div class="container">
@@ -83,42 +79,48 @@
         \)
     </span>
 
-    <h1>Choosing $\mu_t$ and $\sigma_t$</h1>
+    <h1>Experimental Results</h1>
 
     <hr>
-    <p>We know that we can construct the full vector field $v_t(x)$ by integrating the conditional vector field
-    \begin{align*}
-      v_t(x|x_{\data}) = \frac{\sigma_t'(x_{\data})}{\sigma_t(x_{\data})} (x - \mu_t(x_{\data})) + \mu'_t(x_{\data}).
-    \end{align*}
-    </p>
+    <p>Some tables and graphs from the paper.</p>
 
     <hr>
-    <p>However, we haven't actually picked $\mu_t$ and $\sigma_t$. We just know that any differentiable functions that satisfy the following constraints
-    \begin{align*}
-      \mu_0(x_{\data}) &= 0, \\
-      \mu_1(x_{\data}) &= x_{\data}, \\
-      \sigma_0(x_{\data}) &= 1, \\
-      \sigma_1(x_{\data}) &= \sigma_\min
-    \end{align*}
-    would work.
-    </p>
+    <p>Flow matching models beat baseline diffusion models in unconditional image generation.</p>    
 
-    <hr>
-    <p>So, let's pick something concrete. Shall we.</p>
+    <center>
+        <img src="images/image-generation-metrics.png" width="900" alt="">
+    </center>
 
-    <hr>
-    <p>The paper gives two examples of such choices.</p>
-
+    <p>The metrics are
     <ul>
-      <li>Diffusion conditional vector field.</li>
-      <li>"Optimal transport" conditional vector field.</li>
+        <li>NLL = negative log likelihood</li>
+        <li>FID = Frechet Inception Distance</li>
+        <li>NFE = number of function evaluations until reach a certain quality (not sure about this)</li>
     </ul>
-    
+    </p>
+
+    <hr>
+    <p>Flow matching models train faster.</p>
+
+    <center>
+        <img src="images/training-speed-graph.png" alt="">
+    </center>
+
+    <hr>
+    <p>Flow matching models generate high quality samples with fewer function evaluations.</p>
+
+    <center>
+        <img src="images/nfe-graph.png" width="900" alt="">
+    </center>
+
+    <hr>
+    <p>So, this new algorithm is quite promising.</p>
+
     <hr>
     <p>
-        <a href="../_0064/index.html">[&lt;&lt;]</a> 
+        <a href="../_0068/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0066/index.html">[&gt;&gt;]</a> 
+        <a href="../_0070/index.html">[&gt;&gt;]</a> 
     </p>
   </div>
 

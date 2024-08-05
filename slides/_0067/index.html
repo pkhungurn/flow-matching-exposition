@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>0067</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: {autoNumber: "AMS"} }
+    });
+    </script>
+    <script type="text/javascript"
+            src="../../MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<div class="container">
+    <span style="visibility: hidden;">
+        \(
+        \def\sc#1{\dosc#1\csod}
+        \def\dosc#1#2\csod{{\rm #1{\small #2}}}
+
+        \newcommand{\dee}{\mathrm{d}}
+        \newcommand{\Dee}{\mathrm{D}}
+        \newcommand{\In}{\mathrm{in}}
+        \newcommand{\Out}{\mathrm{out}}
+        \newcommand{\pdf}{\mathrm{pdf}}
+        \newcommand{\Cov}{\mathrm{Cov}}
+        \newcommand{\Var}{\mathrm{Var}}
+
+        \newcommand{\ve}[1]{\mathbf{#1}}
+        \newcommand{\ves}[1]{\boldsymbol{#1}}
+        \newcommand{\mrm}[1]{\mathrm{#1}}
+        \newcommand{\etal}{{et~al.}}
+        \newcommand{\sphere}{\mathbb{S}^2}
+        \newcommand{\modeint}{\mathcal{M}}
+        \newcommand{\azimint}{\mathcal{N}}
+        \newcommand{\ra}{\rightarrow}
+        \newcommand{\mcal}[1]{\mathcal{#1}}
+        \newcommand{\X}{\mathcal{X}}
+        \newcommand{\Y}{\mathcal{Y}}
+        \newcommand{\Z}{\mathcal{Z}}
+        \newcommand{\x}{\mathbf{x}}
+        \newcommand{\y}{\mathbf{y}}
+        \newcommand{\z}{\mathbf{z}}
+        \newcommand{\tr}{\mathrm{tr}}
+        \newcommand{\sgn}{\mathrm{sgn}}
+        \newcommand{\diag}{\mathrm{diag}}
+        \newcommand{\Real}{\mathbb{R}}
+        \newcommand{\sseq}{\subseteq}
+        \newcommand{\ov}[1]{\overline{#1}}
+        \DeclareMathOperator*{\argmax}{arg\,max}
+        \DeclareMathOperator*{\argmin}{arg\,min}
+
+        \newcommand{\data}{\mathrm{data}}
+        \newcommand{\N}{\mathcal{N}}
+        \newcommand{\Hil}{\mathcal{H}}
+        \)
+    </span>
+
+    <h1>"Optimal Transport" Conditional Vector Field</h1>
+
+    <hr>
+    <p>We can make things simpler by making sure that $\mu_t(x_{\data})$ and $\sigma_t(x_{\data})$ are linear functions of $t$.
+    \begin{align*}
+        \mu_t(x_{\data}) &= t x_{\data}, \\
+        \sigma_t(x_{\data}) &= 1 - (1-\sigma_{\min})t.
+    \end{align*}
+    This gives us    
+    \begin{align*}
+        \mu_t'(x_{\data}) &= (x_{\data}) \\
+        \sigma'_t(x_{\data}) &= - (1-\sigma_{\min}).
+    \end{align*}
+    The flow is given by
+    \begin{align*}
+        \phi_t(x|x_{\data}) &= \sigma_t(x_{\data})x + \mu_t(x_{\data}) \\
+        &= (1 - (1-\sigma_{\min})t)   x + t x_{\data} \\
+        &= (1 - t)x + t\bigg( \sigma_{\min} x + x_{\data} \bigg).
+    \end{align*}
+    In other words, the conditional flow $\phi_t(x|x_{\data})$ is the displacement interpolation
+    \begin{align*}
+        \phi_t(\cdot|x_{\data}) = (1-t)\mrm{id} + t(\texttt{T}_{x_{\data}} \circ \texttt{S}_{\sigma_{\min}}).
+    \end{align*}
+    The conditional vector field is given by
+    \begin{align*}
+        v_t(x|x_{\data}) &= \frac{-(1-\sigma_{\min})}{1-(1-\sigma_{\min})t}(x - tx_{\data}) + x_{\data} \\
+        &= \frac{x_{\data} - (1-\sigma_{\min}) x}{1 - (1-\sigma_{\min})t}.
+    \end{align*}
+    Note that the conditional vector field does not change direction as $t$ changes.<br>
+    This means that particles will move in straight lines.
+    </p>
+
+    <hr>
+    <p>Again, let's do some visualization.</p>
+
+    <p>Pick $\sigma_{\min} = 0.001$ and $x_{\data} = (-2,1)$ as in the last slide.</p>
+
+    <p>This is the vector field.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_03/frame_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>This is the effect of the vector field on points.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_03/frames_with_points_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>This is a visualization of the flow.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_03/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <br>
+    <p>If you use the flow to push forward $\mcal{N}(0,I)$, you get this..</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240802/gaussian_prob_paths/path_05/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>In summary,</p>
+
+    <table>
+      <tr>
+        <td>
+        <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240803/tdvf/_03/frame_video/video_for_web.mp4" type="video/mp4">      
+        </video>
+        </td>
+      <td>
+        $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
+        </td>
+        <td>
+        <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240803/tdvf/_03/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
+        </video>
+        </td>
+        <td>
+        $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
+        </td>
+        <td>
+        <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240802/gaussian_prob_paths/path_05/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
+        </video>
+        </td>        
+    </tr>      
+    </table>    
+    
+    <hr>
+    <p>With this probability path, we can rewrite the conditional flow matching loss as follows.
+    \begin{align*}
+    \mcal{L}_{\mrm{CFM}}(\theta) 
+    &= E_{\substack{t \sim \mcal{U}([0,1]),\\ x_{\data} \sim p_{\data},\\ x \sim p_t(x|x_{\data})}} [\| v_t(x|x_{\data}) - v(t,x;\theta) \|^2] \\
+    &= E_{\substack{t \sim \mcal{U}([0,1]),\\ x_{\data} \sim p_{\data},\\ x \sim p_t(x|x_{\data})}} \bigg[\bigg\| \frac{x_{\data} - (1-\sigma_{\min})x}{1 - (1-\sigma_{\min})t} - v(t,x;\theta) \bigg\|^2 \bigg] \\
+    &= E_{\substack{t \sim \mcal{U}([0,1]),\\ x_{\data} \sim p_{\data},\\ x_0 \sim p_0}} \bigg[\bigg\| \frac{x_{\data} - (1-\sigma_{\min})((1 - (1-\sigma_{\min})t) x_0 + t{x_{\data}})}{1 - (1-\sigma_{\min})t} - v(t, (1-(1-\sigma_{\min}t))x_0 + t x_{\data};\theta) \bigg\|^2 \bigg] \\
+    &= E_{\substack{t \sim \mcal{U}([0,1]),\\ x_{\data} \sim p_{\data},\\ x_0 \sim p_0}} \bigg[\bigg\| \frac{(1 - (1-\sigma_{\min})t)(x_{\data} - (1-\sigma_{\min})x_0)}{1 - (1-\sigma_{\min})t} - v(t, (1-(1-\sigma_{\min}t))x_0 + t x_{\data};\theta) \bigg\|^2 \bigg] \\
+    &= E_{\substack{t \sim \mcal{U}([0,1]),\\ x_{\data} \sim p_{\data},\\ x_0 \sim p_0}} \bigg[\bigg\| x_{\data} - (1-\sigma_{\min})x_0 - v(t, (1-(1-\sigma_{\min}t))x_0 + t x_{\data};\theta) \bigg\|^2 \bigg].
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>The flow matching paper makes a big deal that this conditional vector field yields the "optimal transport" path between two Gaussian. What does this mean?</p>
+
+    <hr>
+    <p>Let's understand what "optimal transport" is.</p>
+
+    <p><b>Definition.</b> Given two probability distributions $p$ and $p'$ on $\Real^d$, a diffeomorphism $f: \Real^d \ra \Real$ is called an <b>optimal transport plan</b> from $p$ to $p'$ if the following two conditions are satisfied.</p>
+
+    <ul>
+        <li>$p'$ is the push-forward of $p$ according to $f$. In other word, $p' = [f]_* p$</li>
+        <li>$f$ is a function that minimizes
+        \begin{align*}
+            E_{x \sim p}[c(x, f(x))] = \int p(x) c(x,f(x))\, \dee x
+        \end{align*}
+        for some cost function $c: \Real^d \times \Real^d \ra \Real^+ \cup \{0\}$.</li>
+    </ul>
+
+    <hr>
+    <p>For the cost function $c(x,y) = \| x-y \|^2$, the optimal transport plan exists and is unique for non-pathological $p$ and $p'$.</p>
+
+    <p><b>Theorem <a href="https://www.semanticscholar.org/paper/Polar-Factorization-and-Monotone-Rearrangement-of-Brenier/3de337cd8ef933f2b63a1db0561555f2ef0cb886">[Brenier 1991]</a>.</b> Let the cost function $c(x,y) = \| x-y \|^2$. Let $p$ and $p'$ be well-behaved probability distributions (i.e., have finite moments and do not assign mass to sets with measure zero). Then, there exists a unique optimal transport plan $f$ from $p$ to $p'$. Moreover, there exists a convex scalar function $F:\Real^d \ra \Real$ such that $\nabla F = f$.</p>
+
+    <hr>
+    <p>If we want to transform $\mcal{N}(0, I)$ to $\mcal{N}(x_{\data}, \sigma_{\min}^2I)$. What would be the optimal transport plan for this transformation?</p>
+
+    <p>The answer is that the scale-add that we have been using
+    \begin{align*}
+        \varphi(x) = \sigma_{\min} x + x_{\data}
+    \end{align*}
+    is the optimal one for the cost function $c(x,y) = \| x - y \|^2$.
+    </p>
+
+    <p>This is because there is a scalar function
+    \begin{align*}
+        \Phi(x) = \frac{1}{2} \sum_{i=1}^d \bigg( \sqrt{\sigma_{\min}} x^i + \frac{x_{\data}^i}{\sqrt{\sigma_{\min}}} \bigg)^2
+    \end{align*}
+    such that $\nabla \Phi(x) = \varphi(x)$.
+    </p>
+
+    <hr>
+    <p>So, the conditonal flow
+    \begin{align*}
+        \phi_t(x|x_{\data}) = (1-t)x + t(\sigma_{\min}x + x_{\data})
+    \end{align*}
+    is the displacement interpolation between of the optimal transport plan $\sigma_{\min} x + x_{\data}$.
+    </p>
+
+    <p>I think this is why the call $v_t(x|x_{\data})$ the "optimal transport" conditonal vector field.</p>
+
+    <hr>
+    <p>The paper claims that if the conditional paths are straight, then the optimization might become easier.</p>
+
+    <p>This is plausible, but there's no definite proof.</p>
+
+    <hr>
+    <p>Note also that conditional paths being stright does not imply that the marginal paths would be straight.</p>
+
+    <hr>
+    <p>
+        <a href="../_0066/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0068/index.html">[&gt;&gt;]</a> 
+    </p>
+  </div>
+
+<script type="text/javascript">
+$.bigfoot();
+</script>
+
+</body>
+</html>

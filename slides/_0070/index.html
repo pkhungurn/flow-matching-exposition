@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0065</title>
+    <title>0070</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -32,11 +32,7 @@
     <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">    
 </head>
 <body>
 <div class="container">
@@ -83,42 +79,49 @@
         \)
     </span>
 
-    <h1>Choosing $\mu_t$ and $\sigma_t$</h1>
+    <h1>Related & Follow-up Works</h1>
 
     <hr>
-    <p>We know that we can construct the full vector field $v_t(x)$ by integrating the conditional vector field
-    \begin{align*}
-      v_t(x|x_{\data}) = \frac{\sigma_t'(x_{\data})}{\sigma_t(x_{\data})} (x - \mu_t(x_{\data})) + \mu'_t(x_{\data}).
-    \end{align*}
-    </p>
+    <p>I haven't read these papers in full yet.</p>
 
     <hr>
-    <p>However, we haven't actually picked $\mu_t$ and $\sigma_t$. We just know that any differentiable functions that satisfy the following constraints
-    \begin{align*}
-      \mu_0(x_{\data}) &= 0, \\
-      \mu_1(x_{\data}) &= x_{\data}, \\
-      \sigma_0(x_{\data}) &= 1, \\
-      \sigma_1(x_{\data}) &= \sigma_\min
-    \end{align*}
-    would work.
-    </p>
+    <p>Pooladian et al. <b>Multisample Flow Matching: Straightening Flows with Minibatch Couplings</b>. ICML 2023. <a href="https://arxiv.org/abs/2304.14772">[arXiv]</a></p>
 
-    <hr>
-    <p>So, let's pick something concrete. Shall we.</p>
-
-    <hr>
-    <p>The paper gives two examples of such choices.</p>
-
-    <ul>
-      <li>Diffusion conditional vector field.</li>
-      <li>"Optimal transport" conditional vector field.</li>
+    <ul class="no-bullets">
+        <li>You can get straighter flows if you sample a mini-batch of $x_{\data}$ and $x_{\mrm{noise}}$ and so some kind of matching between them and sample pairs based on this matching.</li>
     </ul>
-    
+
+    <p></p>
+
+    <hr>
+    <p>Tong et al. <b>Improving and generalizing flow-based generative models with minibatch optimal transport</b> TMLR 2024. <a href="https://arxiv.org/abs/2302.00482">[arXiv]</a></p>
+
+    <ul class="no-bullets">
+        <li>You can get straighter flows if you do fancier things with the mini-batch of $x_{\data}$ and $x_{\mrm{noise}}$ like running optimal transport algorithms on them.</li>
+    </ul>
+
+    <hr>
+    <p>Fischer et al. <b>Boosting Latent Diffusion with Flow Matching</b>. ECCV 2024. <a href="https://compvis.github.io/fm-boosting/">[Project]</a></p>
+
+    <ul class="no-bullets">
+        <li>There's <a href="https://github.com/CompVis/latent-diffusion">LDM</a> so why not do LFM too?</li>
+    </ul>
+
+    <hr>
+    <p>Liu et al. <b>Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow</b>. ICLR 2023. <a href="https://arxiv.org/abs/2209.03003">[arXiv]</a></p>
+
+    <ul class="no-bullets">
+        <li><b>Rectified flow</b> is another way to formulate generative modeling that gets you the same loss as conditional flow matching, but the math is quite different. It also has more things to say about the optimal transport properties of the vector field you learn. However, I think this paper is harder to understand.</li>
+    </ul>
+
+    <hr>
+    <p>There's probably many more interesting papers to read. If you know some, let me know.</p>
+
     <hr>
     <p>
-        <a href="../_0064/index.html">[&lt;&lt;]</a> 
+        <a href="../_0069/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0066/index.html">[&gt;&gt;]</a> 
+        <a href="../_0071/index.html">[&gt;&gt;]</a> 
     </p>
   </div>
 

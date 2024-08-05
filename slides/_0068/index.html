@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>0065</title>
+    <title>0068</title>
 
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -32,11 +32,7 @@
     <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">    
 </head>
 <body>
 <div class="container">
@@ -83,42 +79,58 @@
         \)
     </span>
 
-    <h1>Choosing $\mu_t$ and $\sigma_t$</h1>
+    <h1>Putting Things Together</h1>
 
     <hr>
-    <p>We know that we can construct the full vector field $v_t(x)$ by integrating the conditional vector field
-    \begin{align*}
-      v_t(x|x_{\data}) = \frac{\sigma_t'(x_{\data})}{\sigma_t(x_{\data})} (x - \mu_t(x_{\data})) + \mu'_t(x_{\data}).
-    \end{align*}
-    </p>
+    <p>Here's how to train a continuous normalizing flow model with the conditonal flow matching loss.</p>
 
-    <hr>
-    <p>However, we haven't actually picked $\mu_t$ and $\sigma_t$. We just know that any differentiable functions that satisfy the following constraints
-    \begin{align*}
-      \mu_0(x_{\data}) &= 0, \\
-      \mu_1(x_{\data}) &= x_{\data}, \\
-      \sigma_0(x_{\data}) &= 1, \\
-      \sigma_1(x_{\data}) &= \sigma_\min
-    \end{align*}
-    would work.
-    </p>
-
-    <hr>
-    <p>So, let's pick something concrete. Shall we.</p>
-
-    <hr>
-    <p>The paper gives two examples of such choices.</p>
-
-    <ul>
-      <li>Diffusion conditional vector field.</li>
-      <li>"Optimal transport" conditional vector field.</li>
+    <ul class="no-bullets">
+        <li>$\mathrm{Train}(p_{\data})$ {
+        <ul class="no-bullets">
+            <li>Randomly initialize network parmeters $\theta$.</li>
+            <li><b>while</b> not satisfied <b>do</b> {
+            <ul class="no-bullets">
+                <li>Sample $x_{\data} \sim p_{\data}$.</li>                
+                <li>Sample $t \sim \mcal{U}([0,1])$.</li>
+                <li>Sample $x_0 \sim \mcal{N}(0,I)$.</li>
+                <li>$x \gets (1 - (1-\sigma_{\min}t))x_0 + tx_{\data}$</li>
+                <li>$\mcal{L} \gets \| x_{\data} - (1-\sigma_{\min})x_0 - v(t, x; \theta) \|^2$</li>
+                <li>Update $\theta$ according to $\nabla_{\theta}\mcal{L}$.</li>
+            </ul>
+            </li>            
+            <li>}</li>
+            <li><b>return</b> $\theta$</li>
+        </ul>
+        </li>        
+        <li>}</li>
     </ul>
-    
+
+    <hr>
+    <p>Here's how to sample from $p_1 \approx p_{\data}$ given a trained CNF $v(t,x;\theta)$.</p>
+
+    <ul class="no-bullets">
+        <li>$\mathrm{Sample}(\theta, K=50)$ {
+        <ul class="no-bullets">
+            <li>Sample $x \sim \mcal{N}(0,I)$.</li>
+            <li>$h \gets 1 / K$</li>
+            <li>$t \gets 0$</li>
+            <li><b>for</b> $i$ = $1$ <b>to</b> $K$ <b>do</b> {
+            <ul class="no-bullets">
+                <li>$x \gets x + h\, v(t, x;\theta)$</li>
+                <li>$t \gets t + h$</li>
+            </ul>
+            </li>
+            <li>}</li>
+        </ul>
+        </li>        
+        <li>}</li>
+    </ul>
+
     <hr>
     <p>
-        <a href="../_0064/index.html">[&lt;&lt;]</a> 
+        <a href="../_0067/index.html">[&lt;&lt;]</a> 
         <a href="../../index.html">[Top]</a>
-        <a href="../_0066/index.html">[&gt;&gt;]</a> 
+        <a href="../_0069/index.html">[&gt;&gt;]</a> 
     </p>
   </div>
 

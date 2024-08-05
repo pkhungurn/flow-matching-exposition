@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>0066</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: {autoNumber: "AMS"} }
+    });
+    </script>
+    <script type="text/javascript"
+            src="../../MathJax/MathJax.js?config=TeX-AMS_HTML-full">
+    </script>
+
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bigfoot.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../css/bigfoot-default.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<div class="container">
+    <span style="visibility: hidden;">
+        \(
+        \def\sc#1{\dosc#1\csod}
+        \def\dosc#1#2\csod{{\rm #1{\small #2}}}
+
+        \newcommand{\dee}{\mathrm{d}}
+        \newcommand{\Dee}{\mathrm{D}}
+        \newcommand{\In}{\mathrm{in}}
+        \newcommand{\Out}{\mathrm{out}}
+        \newcommand{\pdf}{\mathrm{pdf}}
+        \newcommand{\Cov}{\mathrm{Cov}}
+        \newcommand{\Var}{\mathrm{Var}}
+
+        \newcommand{\ve}[1]{\mathbf{#1}}
+        \newcommand{\ves}[1]{\boldsymbol{#1}}
+        \newcommand{\mrm}[1]{\mathrm{#1}}
+        \newcommand{\etal}{{et~al.}}
+        \newcommand{\sphere}{\mathbb{S}^2}
+        \newcommand{\modeint}{\mathcal{M}}
+        \newcommand{\azimint}{\mathcal{N}}
+        \newcommand{\ra}{\rightarrow}
+        \newcommand{\mcal}[1]{\mathcal{#1}}
+        \newcommand{\X}{\mathcal{X}}
+        \newcommand{\Y}{\mathcal{Y}}
+        \newcommand{\Z}{\mathcal{Z}}
+        \newcommand{\x}{\mathbf{x}}
+        \newcommand{\y}{\mathbf{y}}
+        \newcommand{\z}{\mathbf{z}}
+        \newcommand{\tr}{\mathrm{tr}}
+        \newcommand{\sgn}{\mathrm{sgn}}
+        \newcommand{\diag}{\mathrm{diag}}
+        \newcommand{\Real}{\mathbb{R}}
+        \newcommand{\sseq}{\subseteq}
+        \newcommand{\ov}[1]{\overline{#1}}
+        \DeclareMathOperator*{\argmax}{arg\,max}
+        \DeclareMathOperator*{\argmin}{arg\,min}
+
+        \newcommand{\data}{\mathrm{data}}
+        \newcommand{\N}{\mathcal{N}}
+        \newcommand{\Hil}{\mathcal{H}}
+        \)
+    </span>
+
+    <h1>Diffusion Conditional Vector Field</h1>
+
+    <hr>
+    <p>When we train a diffusion model, we actually try to generate a conditional probability path
+    \begin{align*}
+        p_t(x|x_{\data}) = \mcal{N}(\alpha_t x_{\data}, \sigma_t^2 I)
+    \end{align*}
+    where $\alpha_t$ and $\sigma_t$ are scalar functions of $t$ such that    
+    </p>
+
+    <ul>
+        <li>$\mcal{N}(\alpha_0 x_{\data}, \sigma_0^2 I)$ resemples a Gaussian with mean $0$.</li>
+        <li>$\mcal{N}(\alpha_1 x_{\data}, \sigma_1^2 I)$ resembles $\mcal{N}(x_{\data}, \sigma_{\min}^2 I)$.</li>        
+    </ul>
+
+    <p>The functions $\alpha_t$ and $\sigma_t$ are known collectively as the <b>noise schedule</b>.</p>
+
+    <hr>
+    <p>There are two types of noise schedules.</p>
+
+    <ul>
+        <li>Variance exploding noise schedule.</li>
+        <li>Variance perserving noise schedule.</li>
+    </ul>
+
+    <p>A variance perserving noise noise schedule is the one where $\sigma_t = \sqrt{1 - \alpha_t^2}$. A variance exploding noise schedule is something that does not satisfy this constraint.</p>
+    
+    <hr>
+    <p>A popular variance exploding schedule <a href="https://arxiv.org/abs/2206.00364">[Karras et al. 2022]</a> is given by
+    \begin{align*}        
+        \alpha_t &= 1,\\
+        \sigma_t &= 80(1-t) + t\sigma_{\min}.
+    \end{align*}
+    </p>
+
+    <hr>
+    <p>A popular variance preserving schedule <a href="https://arxiv.org/abs/2102.09672">[Nichol and Dhariwal 2021]</a> is the cosine schedule.
+    \begin{align*}
+        \alpha_t &= \cos\bigg(\frac{\pi}{2} (1 - (1 - t_{\min})t) \bigg) \\
+        \sigma_t &= \sqrt{1 - \alpha_t^2} = \sin\bigg(\frac{\pi}{2} (1 - (1 -t_{\min})t) \bigg)
+    \end{align*}
+    where $t_{\min}$ is chosen so that $\sigma_1$ is small.
+    </p>
+    
+    <hr>
+    <p>Let's visualize such a conditional vector field and its effect on a Gaussian. We'll do the cosine schedule because it is nice and easy.</p>
+
+    <p>Pick $t_{\min} = 0.001$. We have that
+    \begin{align*}
+        \mu_t(x_{\data}) &= \cos\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg)x_{\data},  \\
+        \sigma_t(x_{\data}) &= \sin\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg).
+    \end{align*}
+    This gives us
+    \begin{align*}
+        \mu_t'(x_{\data}) &= 0.999\frac{\pi}{2}\sin\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg)x_{\data},  \\
+        \sigma_t'(x_{\data}) &= -0.999\frac{\pi}{2} \cos\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg).
+    \end{align*}
+    The conditional flow is given by
+    \begin{align*}
+        \phi_t(x|x_{\data}) 
+        &= \sigma_t(x_{\data}) x + \mu_t(x_{\data}) \\
+        &= \sin\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg) x + \cos\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg)x_{\data}.
+    \end{align*}
+    Lastly, the conditional vector field is given by
+    \begin{align*}
+        v_t(x|x_{\data})
+        &= \frac{\sigma'_t(x_{\data})}{\sigma_t(x_{\data})}(x - \mu_t(x_{\data})) + \mu_t'(x_{\data})\\
+        &= \frac{-\cos(\pi(1-0.999t)/2)}{\sin(\pi(1-0.999t)/2)}\bigg(x - x_{\data} \cos \bigg( \frac{\pi}{2} (1 - 0.999t) \bigg) \bigg) + 0.999\frac{\pi}{2}\sin\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg)x_{\data} \\
+        &= -\cot(\pi(1-0.999t)/2)\bigg(x - x_{\data} \cos \bigg( \frac{\pi}{2} (1 - 0.999t) \bigg) \bigg) + 0.999\frac{\pi}{2}\sin\bigg( \frac{\pi}{2} (1 - 0.999t) \bigg)x_{\data}.
+    \end{align*}    
+    </p>
+
+    <p>Let's say $x_{\data} = (-2,1)$. Then, we have that following visualization.</p>
+
+    <p>This is the vector field.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_02/frame_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>This is the effect of the vector field on points.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_02/frames_with_points_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>This is a visualization of the flow.</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240803/tdvf/_02/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <br>
+    <p>If you use the flow to push forward $\mcal{N}(0,I)$, you get this..</p>
+
+    <center>
+    <video width="600" height="600" controls muted autoplay loop>
+        <source src="../../data/_20240802/gaussian_prob_paths/path_04/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
+    </video>
+    </center>
+
+    <p>In summary,</p>
+
+    <table>
+      <tr>
+        <td>
+        <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240803/tdvf/_02/frame_video/video_for_web.mp4" type="video/mp4">      
+        </video>
+        </td>
+      <td>
+        $$\xrightarrow{\ \ \ \mrm{integration}\ \ \ } $$
+        </td>
+        <td>
+        <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240803/tdvf/_02/frames_with_image_video/video_for_web.mp4" type="video/mp4">      
+        </video>
+        </td>
+        <td>
+        $$\xrightarrow{\ \ \ \mrm{push-forward}\ \ \ } $$
+        </td>
+        <td>
+        <video width="300" height="300" controls muted autoplay loop>
+            <source src="../../data/_20240802/gaussian_prob_paths/path_04/gaussian_viz_video/video_for_web.mp4" type="video/mp4">      
+        </video>
+        </td>        
+    </tr>
+    </table>        
+    
+    <hr>
+    <p>Note that the flow is kind of complicated.<br>Particles travel in curved paths.<br>They can "overshoot" the target and have to backtrack.</p>
+    
+    <hr>
+    <p>
+        <a href="../_0065/index.html">[&lt;&lt;]</a> 
+        <a href="../../index.html">[Top]</a>
+        <a href="../_0067/index.html">[&gt;&gt;]</a> 
+    </p>
+  </div>
+
+<script type="text/javascript">
+$.bigfoot();
+</script>
+
+</body>
+</html>

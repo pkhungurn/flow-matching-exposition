@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import Callable, Tuple
 
@@ -128,6 +129,7 @@ class GaussianProbabilityPathTasksArgs:
         os.makedirs(os.path.dirname(file_name), exist_ok=True)
         pyplot.savefig(file_name)
         pyplot.close(fig)
+        logging.info(f"Saved {file_name}")
 
     def all_task_name(self):
         return f"{self.prefix}/all"
@@ -234,5 +236,44 @@ def define_data_20240802_gaussian_prob_paths_tasks(workspace: Workspace):
         v_max=1.0 / (2.0 * numpy.pi))
     args.define_tasks(workspace)
     all_tasks.append(args.all_task_name())
+
+    def sigma_04(t: numpy.ndarray):
+        angle = numpy.pi * (1-0.999*t) / 2
+        sin_angle = numpy.sin(angle)
+        return sin_angle
+
+    def mu_04(t: numpy.ndarray):
+        x_data = -2
+        y_data = 1
+        angle = numpy.pi * (1-0.999*t) / 2
+        cos_angle = numpy.cos(angle)
+        return x_data*cos_angle, y_data*cos_angle
+
+    args = GaussianProbabilityPathTasksArgs(
+        f"{DATA_20240802_GAUSSIAN_PROB_PATHS_PREFIX}/path_04",
+        101,
+        mu_func=mu_04,
+        sigma_func=sigma_04,
+        v_max=1.0 / (2.0 * numpy.pi))
+    args.define_tasks(workspace)
+    all_tasks.append(args.all_task_name())
+
+    def sigma_05(t: numpy.ndarray):
+        return 1 - 0.999*t
+
+    def mu_05(t: numpy.ndarray):
+        x_data = -2
+        y_data = 1
+        return x_data*t, y_data*t
+
+    args = GaussianProbabilityPathTasksArgs(
+        f"{DATA_20240802_GAUSSIAN_PROB_PATHS_PREFIX}/path_05",
+        101,
+        mu_func=mu_05,
+        sigma_func=sigma_05,
+        v_max=1.0 / (2.0 * numpy.pi))
+    args.define_tasks(workspace)
+    all_tasks.append(args.all_task_name())
+
 
     workspace.create_command_task(f"{DATA_20240802_GAUSSIAN_PROB_PATHS_PREFIX}/all", all_tasks)

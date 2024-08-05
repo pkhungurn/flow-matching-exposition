@@ -117,12 +117,14 @@
     <p>In the last slide, we know a probability path that transforms $\mcal{N}(0,1)$ to $\mcal{N}(x_{\data}, \sigma_{\min}^2 I)$. This probability path is completely determined if we have picked one $x_{\data}$. So, let us denote it by $$p_t(x|x_{\data}).$$</p>
 
     <hr>
-    <p>It follows immediately from the law of total probability that
+    <p>It follows immediately from the law of total probability that we can get the full probability distribution by "marginalizing" the conditional distribution:
     \begin{align*}
       p_t(x) = \int p_{\data}(x_{\data}) p_t(x|x_{\data})\, \dee x_{\data}.
     \end{align*}
     In other words, we can construct a probability path from $\mcal{N}(0,I)$ to an approximation of $p_{\data}$ by integrating the probability paths for the special cases where $p_{\data}$ has only one element.
     </p>
+
+    <p>Let's call this distribution the <b>marginal distribution</b>.</p>
 
     <hr>
     <p>While we can construct $p_t$, we don't know the vector field that generates this probability path, so we cannot do flow matching yet.</p>
@@ -138,7 +140,7 @@
     <hr>
     <p>It turns out the following flow works.</p>
 
-    <p><b>Theorem</b>. The vector field
+    <p><b>Theorem</b>. The <b>marginal vector field</b>
     \begin{align*}
       v_t(x) = \int v_t(x|x_{\data}) \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{p_t(x)}\, \dee x_{\data}
     \end{align*}

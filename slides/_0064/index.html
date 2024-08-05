@@ -89,7 +89,7 @@
     </p>
 
     <hr>
-    <p>From the last slide, we know exactly what $p_t$ is.
+    <p>From the last slide, we know exactly what $p_t$ is. It is the marginal probability distribution
     \begin{align*}
     \int p_t(x|x_{\data}) p_{\data}(x_{\data})\, \dee x_{\data}.
     \end{align*}
@@ -97,12 +97,12 @@
     </p>
 
     <ol>
-      <li>Uniformly selet $x_{\data}$ from the samples that we have.</li>
+      <li>Uniformly select $x_{\data}$ from the samples that we have.</li>
       <li>Sample $x$ from $p_t(x|x_{\data})$, which is just a Gaussian distribution.</li>
     </ol>
 
     <hr>
-    <p>We also know a vector field $v_t(x)$ that works. However, the definition of $v_t(x)$ is
+    <p>We also know a vector field $v_t(x)$ that generates $p_t(x)$. However, the definition of $v_t(x)$ is
     \begin{align*}
       v_t(x) &= \int v_t(x|x_{\data}) \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{p_t(x)}\, \dee x_{\data}  \\
       &= \int v_t(x|x_{\data}) \frac{p_t(x|x_{\data})p_{\data}(x_{\data})}{\int p_t(x|x_{\data}) p_{\data}(x_{\data})\, \dee x_{\data}}\, \dee x_{\data}.
